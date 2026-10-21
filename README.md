@@ -1,4 +1,4 @@
-# Umbralia: Ecos del Tiempo · v85
+# Umbralia: Ecos del Tiempo · v86
 
 Juego de acción y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfréntate a jefes con mecánicas propias. Incluye campaña, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.
 
@@ -7,7 +7,7 @@ Juego de acción y supervivencia para navegador: explora siete mundos, construye
 1. Descomprime el ZIP y sube **su contenido** a la raíz del repositorio: `index.html`, `config.js`, `.nojekyll`, `README.md` y la carpeta completa `assets`.
 2. Reemplaza los archivos anteriores, incluida la música. Conserva la dirección del juego y los datos del navegador para mantener tus partidas y trofeos. Antes de actualizar, exporta tus partidas como precaución.
 3. En **Settings → Pages → Deploy from a branch**, elige **main** y **/(root)** y guarda. Abre el enlace cuando termine el despliegue.
-4. El título y la insignia del menú deben mostrar **v85**. Si ves otra versión, recarga sin caché.
+4. El título y la insignia del menú deben mostrar **v86**. Si ves otra versión, recarga sin caché.
 
 No necesita instalación ni compilación. El motor está en `index.html` y los módulos de cuentas y clasificación están en `assets/ranked/`. Prueba local: `python3 -m http.server 8000` y abre `http://localhost:8000`.
 
@@ -176,3 +176,13 @@ Tridente, Empanada, Gaia y Guantes tienen descuentos: sus costes existentes de m
 El Obelisco pasa de radio 84 a 97; el fuego del auto baja de 28 a 24 y la Empanada gigante de 18 a 14 por pulso. La descripción del robot es más breve.
 
 Las pruebas de esta versión cubren intervalos, límites, combate, descanso, daño recibido, persistencia y precios en las cuatro dificultades. El cronómetro de Ranked sigue siendo una prueba local no verificada: la actualización de gatos no activa la competición oficial. La configuración de retorno de Auth y el servidor de simulación verificada siguen pendientes; no se sustituyen por una aceptación de puntuaciones del navegador.
+
+## Gatos dorados y acertijo · v86
+
+Los gatos tienen **42 de vida y 6 de daño**. La casa tiene **340 de vida base** y gana experiencia con las bajas de sus propios gatos. Mejora con **4, 9 y 16 bajas acumuladas**, con detalles dorados y estrellas. La primera mejora aumenta la vida de los gatos a **54**; la segunda aumenta su velocidad de **72 a 90**; la tercera permite **4 gatos vivos por casa**, manteniendo el máximo de tres casas. Las mejoras afectan a los compañeros existentes y a los nuevos. Los gatos tienen siluetas redondeadas más sencillas; mantienen las poses de caminar, atacar y dormir. Los guardados antiguos se adaptan una sola vez, conservando la proporción de vida.
+
+En el mundo 4, validar los valores del altar y acertar cada nota inicia una defensa. Utiliza el número de oleada actual, sin fijarlo a un ejemplo ni reiniciar la progresión. Debes terminar esa oleada antes de avanzar en el acertijo; el Director espera a que termine la última defensa.
+
+Todos los generadores, incluido el de diamantes, producen **un 20% más rápido**: su tiempo de ciclo se divide entre 1,2. La cantidad generada por ciclo no cambia.
+
+Se mantienen los audios y los límites actuales de la beta de Rankeds. La confirmación/recuperación por correo sigue requiriendo configurar las URLs indicadas arriba; no se ha confirmado una sesión administrativa en el navegador.
