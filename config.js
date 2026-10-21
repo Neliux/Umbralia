@@ -1,5 +1,10 @@
-// En Pages estándar el repositorio se detecta automáticamente.
+// Browser configuration: these two Supabase values are intentionally public.
+// Never put database passwords or privileged server keys in this file.
 window.UMBRALIA_CONFIG = {
-  repository: "", // Ejemplo: "https://github.com/TU_USUARIO/TU_REPOSITORIO"
-  feedbackFormUrl: "" // Opcional: enlace HTTPS a tu formulario externo
+  "repository": "https://github.com/Neliux/Umbralia",
+  "feedbackFormUrl": "",
+  "ranked": {
+    "url": "https://lskzilcqswzxpeyyfutn.supabase.co",
+    "publishableKey": "sb_publishable_Ex9yW_IomWey8DmHMKtWyg_Z6iZT7g9"
+  }
 };

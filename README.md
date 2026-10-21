@@ -1,4 +1,4 @@
-# Umbralia: Ecos del Tiempo · v81
+# Umbralia: Ecos del Tiempo · v84
 
 Juego de acción y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfréntate a jefes con mecánicas propias. Incluye campaña, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.
 
@@ -7,9 +7,22 @@ Juego de acción y supervivencia para navegador: explora siete mundos, construye
 1. Descomprime el ZIP y sube **su contenido** a la raíz del repositorio: `index.html`, `config.js`, `.nojekyll`, `README.md` y la carpeta completa `assets`.
 2. Reemplaza los archivos anteriores, incluida la música. Conserva la dirección del juego y los datos del navegador para mantener tus partidas y trofeos. Antes de actualizar, exporta tus partidas como precaución.
 3. En **Settings → Pages → Deploy from a branch**, elige **main** y **/(root)** y guarda. Abre el enlace cuando termine el despliegue.
-4. El título y la insignia del menú deben mostrar **v81**. Si ves otra versión, recarga sin caché.
+4. El título y la insignia del menú deben mostrar **v84**. Si ves otra versión, recarga sin caché.
 
-No necesita instalación ni compilación. El JavaScript y los estilos están integrados en `index.html`. Prueba local: `python3 -m http.server 8000` y abre `http://localhost:8000`.
+No necesita instalación ni compilación. El motor está en `index.html` y los módulos de cuentas y clasificación están en `assets/ranked/`. Prueba local: `python3 -m http.server 8000` y abre `http://localhost:8000`.
+
+## Cambios de v82
+
+- **Recomendable** encima de la tarjeta de campaña y **Beta** encima de Caos.
+- El guardián del primer mundo de campaña tiene **20% menos vida**, **20% menos daño** y sus recargas avanzan un 20% más despacio: aproximadamente **25% más tiempo entre ataques**. Tiene una breve espera inicial antes de disparar. El ajuste se aplica una sola vez también a jefes ya guardados. No reduce las estadísticas de ese jefe en Caos ni las del Vacío.
+- El jugador puede **reparar el núcleo durante un jefe de campaña** acercándose y pulsando **Interactuar / E**. Se conservan el coste y las esperas de reparación: 3 s en Fácil/Normal, 5 s en Hardcore y 6 s en Masoquista. Un núcleo ausente no puede repararse. La excepción no desbloquea reparaciones generales de estructuras durante combate.
+- El Beyblade solo concede su velocidad de giro **mientras está ejecutando el ataque**, no por llevarlo equipado. Se conservan 9 de daño base por pulso y 4,2 s de recarga.
+- Corregida una causa reproducible de la ventana de error de Caos: el escudo eliminaba proyectiles dentro de un recorrido por índices y dejaba referencias inválidas. Los recorridos usan instantáneas, comprueban que el proyectil siga activo y lo eliminan por identidad. También se protege el recorrido de enemigos ante bajas encadenadas.
+- La recuperación automática de errores de **Caos infinito** carga su propia partida. El límite de un intento por batallón también distingue modo y partida; no sustituye Infinito por Caos normal.
+- Las primeras misiones muestran cantidades y pasos concretos: **Interactuar / E**, **Crafteo / C → Armas**, **Construir / B → EXPANDIR ISLA**, y **Crafteo → Bengala**. Las partidas anteriores conservan su progreso de tutorial.
+- **EXPANDIR ISLA** tiene una tarjeta destacada, botón grande, nivel de ampliación y coste visible. Conserva sus precios y requisitos.
+- Aserradero, cultivos, mina, fábrica de hierro y mercado producen **12% más rápido**: su intervalo se divide entre 1,12. La fábrica de diamantes conserva su intervalo de 22 segundos.
+- Los 19 audios son **idénticos a los de v81**, con sus rutas originales. Se mantienen partidas, récords y trofeos.
 
 ## Caos normal e infinito
 
@@ -105,8 +118,51 @@ Activa el sonido en ajustes e interactúa con la página para autorizar la repro
 
 Activa **Settings → General → Features → Issues** en GitHub. El botón de reportes prepara el contenido; el jugador debe publicarlo, no se envía automáticamente. En `config.js` puedes indicar la URL de tu repositorio o un formulario externo. Para GitHub Pages estándar, el repositorio se detecta automáticamente.
 
-## Verificación de v81
+## Verificación de v82
 
-Se comprobaron arranque y sintaxis, 90 batallones consecutivos, ausencia de la Pelota Roja en Infinito, final del Caos normal, límites y elección de mejoras, cambio de armas, simulación de todos los jefes elegibles y efectos, guardado independiente, continuación por encima del batallón 30, respaldo ante corrupción, rechazo de estados inválidos y carga de una partida generada con el código v80. También se revisaron las ramas de diálogo, fase negra, reproducción acelerada y restablecimiento del tempo, rutas y decodificación de los audios e integridad del ZIP.
+En v81 se comprobaron arranque y sintaxis, 90 batallones consecutivos, ausencia de la Pelota Roja en Infinito, final del Caos normal, límites y elección de mejoras, cambio de armas, simulación de todos los jefes elegibles y efectos, guardado independiente, continuación por encima del batallón 30, respaldo ante corrupción, rechazo de estados inválidos y carga de una partida generada con el código v80. También se revisaron las ramas de diálogo, fase negra, reproducción acelerada y restablecimiento del tempo, rutas y decodificación de los audios e integridad del ZIP.
+
+En v82 se reprodujo y verificó la corrección del fallo de proyectiles con escudos en ambos modos de Caos, incluidos proyectiles especiales. Se probaron los cambios de velocidad, reparación, daño del primer jefe, generadores, misiones, continuidad desde v81 y recuperación de Infinito. También se ejecutaron 108 combinaciones de jefes/armas/modos y 26 escenarios con grupos densos de enemigos, mejoras y armas distintas, sin excepciones en esas simulaciones.
 
 Las pruebas de lógica usan un entorno de navegador simulado y renderizado Canvas nativo. **No sustituyen una partida manual en un navegador o teléfono real**: prueba los controles, el audio y el cambio de orientación en tus dispositivos antes de anunciar la versión.
+
+## Cuentas y Rankeds · v84 BETA
+
+El menú tiene tres páginas: **Cuentas ← Inicio → Rankeds**. Puedes deslizar horizontalmente o usar los botones superiores. En Cuentas puedes registrarte, entrar y recuperar tu contraseña con correo electrónico; Gmail funciona como cualquier otro correo. No se solicita la contraseña del correo. Google OAuth no está habilitado en el proyecto.
+
+Al crear un mundo, **Jugar para Rankeds · BETA** activa un cronómetro local de prueba. Se detiene en las ventanas que pausan el juego y aparece detenido en Ajustes. Se conserva al guardar y continuar. No convierte guardados anteriores en intentos oficiales ni publica resultados.
+
+**Estado competitivo: pendiente de validación de partidas en servidor.** Las nueve tablas consultan únicamente marcas verificadas. Las categorías siguen cerradas: ningún tiempo calculado por el navegador se acepta como récord oficial. Consulta [SECURITY.md](SECURITY.md).
+
+### Configuración de los correos de cuenta
+
+En el proyecto Supabase **Umbralia-ranked → Authentication → URL Configuration**, establece:
+
+- Site URL: `https://neliux.github.io/Umbralia/`
+- Redirect URLs: añade exactamente `https://neliux.github.io/Umbralia/`
+
+Este ajuste es necesario para que los enlaces de confirmación y recuperación vuelvan al juego. La conexión disponible permite trabajar con la base de datos, pero no editar esta configuración de Auth. El registro exige confirmar el correo. Comprueba un registro real y una recuperación tras configurar estas direcciones. No hemos enviado correos de prueba a terceras personas. Para abrir el registro a muchos jugadores, configura un proveedor SMTP propio y los controles de abuso desde Supabase; el envío incluido tiene límites.
+
+Las cuentas usan Supabase Auth. La contraseña se envía por HTTPS directamente a Auth y no se guarda en el juego. El SDK conserva la sesión en el navegador para permitir seguir conectado; cerrar sesión no borra mundos locales. **La cuenta no sincroniza ni respalda los mundos.**
+
+### Balance de v84
+
+- Faro de impulso: radio 210 → **270**.
+- Auto: bolas de fuego 32 → **28**; choque y protección se conservan.
+- Laptop: básicos **25 / 38 / 22 / 17 / 47**, según el modo. Dominio sin cambios.
+
+Se mantienen los nombres de las claves de guardado y se aceptan versiones anteriores. Se conservan los 19 audios originales del repositorio.
+
+### Desarrollo y comprobaciones
+
+GitHub Pages sirve directamente los archivos incluidos. No requiere instalar Node en producción.
+
+```sh
+npm ci
+npm run build
+npm test
+```
+
+`src/accounts.js` es la fuente del módulo de cuentas; `assets/ranked/accounts.js` es el bundle listo para el navegador. Las versiones de las dependencias están fijadas en `package-lock.json`. No añadas contraseñas ni claves administrativas a `config.js`.
+
+Los archivos `supabase/sql/` documentan migraciones ya aplicadas. No los ejecutes otra vez en la misma base.

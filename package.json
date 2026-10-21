@@ -1,0 +1,23 @@
+{
+  "name": "umbralia",
+  "version": "84.0.0",
+  "description": "Juego de acción y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfréntate a jefes con mecánicas propias. Incluye campaña, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "esbuild src/accounts.js --bundle --minify --format=iife --target=es2020 --outfile=assets/ranked/accounts.js",
+    "test": "node --test tests/*.test.cjs && node scripts/check-client-secrets.cjs"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "commonjs",
+  "dependencies": {
+    "@supabase/supabase-js": "2.118.0"
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "0.1.100",
+    "esbuild": "0.25.12"
+  },
+  "private": true
+}
