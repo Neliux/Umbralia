@@ -1,4 +1,4 @@
-# Umbralia: Ecos del Tiempo · v84
+# Umbralia: Ecos del Tiempo · v85
 
 Juego de acción y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfréntate a jefes con mecánicas propias. Incluye campaña, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.
 
@@ -7,7 +7,7 @@ Juego de acción y supervivencia para navegador: explora siete mundos, construye
 1. Descomprime el ZIP y sube **su contenido** a la raíz del repositorio: `index.html`, `config.js`, `.nojekyll`, `README.md` y la carpeta completa `assets`.
 2. Reemplaza los archivos anteriores, incluida la música. Conserva la dirección del juego y los datos del navegador para mantener tus partidas y trofeos. Antes de actualizar, exporta tus partidas como precaución.
 3. En **Settings → Pages → Deploy from a branch**, elige **main** y **/(root)** y guarda. Abre el enlace cuando termine el despliegue.
-4. El título y la insignia del menú deben mostrar **v84**. Si ves otra versión, recarga sin caché.
+4. El título y la insignia del menú deben mostrar **v85**. Si ves otra versión, recarga sin caché.
 
 No necesita instalación ni compilación. El motor está en `index.html` y los módulos de cuentas y clasificación están en `assets/ranked/`. Prueba local: `python3 -m http.server 8000` y abre `http://localhost:8000`.
 
@@ -126,7 +126,7 @@ En v82 se reprodujo y verificó la corrección del fallo de proyectiles con escu
 
 Las pruebas de lógica usan un entorno de navegador simulado y renderizado Canvas nativo. **No sustituyen una partida manual en un navegador o teléfono real**: prueba los controles, el audio y el cambio de orientación en tus dispositivos antes de anunciar la versión.
 
-## Cuentas y Rankeds · v84 BETA
+## Cuentas y Rankeds · v85 BETA
 
 El menú tiene tres páginas: **Cuentas ← Inicio → Rankeds**. Puedes deslizar horizontalmente o usar los botones superiores. En Cuentas puedes registrarte, entrar y recuperar tu contraseña con correo electrónico; Gmail funciona como cualquier otro correo. No se solicita la contraseña del correo. Google OAuth no está habilitado en el proyecto.
 
@@ -145,7 +145,7 @@ Este ajuste es necesario para que los enlaces de confirmación y recuperación v
 
 Las cuentas usan Supabase Auth. La contraseña se envía por HTTPS directamente a Auth y no se guarda en el juego. El SDK conserva la sesión en el navegador para permitir seguir conectado; cerrar sesión no borra mundos locales. **La cuenta no sincroniza ni respalda los mundos.**
 
-### Balance de v84
+### Balance de v85
 
 - Faro de impulso: radio 210 → **270**.
 - Auto: bolas de fuego 32 → **28**; choque y protección se conservan.
@@ -166,3 +166,13 @@ npm test
 `src/accounts.js` es la fuente del módulo de cuentas; `assets/ranked/accounts.js` es el bundle listo para el navegador. Las versiones de las dependencias están fijadas en `package-lock.json`. No añadas contraseñas ni claves administrativas a `config.js`.
 
 Los archivos `supabase/sql/` documentan migraciones ya aplicadas. No los ejecutes otra vez en la misma base.
+
+## Casa de gatos y balance de v85
+
+La **Casa de gatos** se desbloquea en expansión 3. Máximo tres casas: cada una invoca un gato cada cinco segundos, hasta tres gatos vivos propios. Cada gato tiene 28 de vida, hace 4 de daño cada 0,9 s y busca enemigos cerca de su casa. Caminan, atacan y duermen al terminar el combate. La pérdida de un gato deja un espacio para el siguiente; destruir o vender su casa retira sus compañeros. Casas y gatos se guardan con el mundo. En gráficos simples sus poses no usan la oscilación ni los trazos de ataque.
+
+Tridente, Empanada, Gaia y Guantes tienen descuentos: sus costes existentes de madera/piedra quedan entre 1800 y 2000 después de los modificadores de dificultad; el hierro baja un 10%. No se añaden recursos que no estaban en la receta. Los demás materiales se conservan.
+
+El Obelisco pasa de radio 84 a 97; el fuego del auto baja de 28 a 24 y la Empanada gigante de 18 a 14 por pulso. La descripción del robot es más breve.
+
+Las pruebas de esta versión cubren intervalos, límites, combate, descanso, daño recibido, persistencia y precios en las cuatro dificultades. El cronómetro de Ranked sigue siendo una prueba local no verificada: la actualización de gatos no activa la competición oficial. La configuración de retorno de Auth y el servidor de simulación verificada siguen pendientes; no se sustituyen por una aceptación de puntuaciones del navegador.
