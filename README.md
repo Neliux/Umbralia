@@ -126,7 +126,7 @@ En v82 se reprodujo y verificó la corrección del fallo de proyectiles con escu
 
 Las pruebas de lógica usan un entorno de navegador simulado y renderizado Canvas nativo. **No sustituyen una partida manual en un navegador o teléfono real**: prueba los controles, el audio y el cambio de orientación en tus dispositivos antes de anunciar la versión.
 
-## Cuentas y Rankeds · v85 BETA
+## Cuentas y Rankeds · BETA
 
 El menú tiene tres páginas: **Cuentas ← Inicio → Rankeds**. Puedes deslizar horizontalmente o usar los botones superiores. En Cuentas puedes registrarte, entrar y recuperar tu contraseña con correo electrónico; Gmail funciona como cualquier otro correo. No se solicita la contraseña del correo. Google OAuth no está habilitado en el proyecto.
 
@@ -145,7 +145,7 @@ Este ajuste es necesario para que los enlaces de confirmación y recuperación v
 
 Las cuentas usan Supabase Auth. La contraseña se envía por HTTPS directamente a Auth y no se guarda en el juego. El SDK conserva la sesión en el navegador para permitir seguir conectado; cerrar sesión no borra mundos locales. **La cuenta no sincroniza ni respalda los mundos.**
 
-### Balance de v85
+### Balance de la versión anterior (v84)
 
 - Faro de impulso: radio 210 → **270**.
 - Auto: bolas de fuego 32 → **28**; choque y protección se conservan.
