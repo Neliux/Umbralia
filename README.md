@@ -1,4 +1,4 @@
-# Umbralia: Ecos del Tiempo · v83
+# Umbralia: Ecos del Tiempo · v84
 
 Juego de acción y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfréntate a jefes con mecánicas propias. Incluye campaña, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.
 
@@ -7,9 +7,9 @@ Juego de acción y supervivencia para navegador: explora siete mundos, construye
 1. Descomprime el ZIP y sube **su contenido** a la raíz del repositorio: `index.html`, `config.js`, `.nojekyll`, `README.md` y la carpeta completa `assets`.
 2. Reemplaza los archivos anteriores, incluida la música. Conserva la dirección del juego y los datos del navegador para mantener tus partidas y trofeos. Antes de actualizar, exporta tus partidas como precaución.
 3. En **Settings → Pages → Deploy from a branch**, elige **main** y **/(root)** y guarda. Abre el enlace cuando termine el despliegue.
-4. El título y la insignia del menú deben mostrar **v83**. Si ves otra versión, recarga sin caché.
+4. El título y la insignia del menú deben mostrar **v84**. Si ves otra versión, recarga sin caché.
 
-No necesita instalación ni compilación. El JavaScript y los estilos están integrados en `index.html`. Prueba local: `python3 -m http.server 8000` y abre `http://localhost:8000`.
+No necesita instalación ni compilación. El motor está en `index.html` y los módulos de cuentas y clasificación están en `assets/ranked/`. Prueba local: `python3 -m http.server 8000` y abre `http://localhost:8000`.
 
 ## Cambios de v82
 
@@ -126,14 +126,43 @@ En v82 se reprodujo y verificó la corrección del fallo de proyectiles con escu
 
 Las pruebas de lógica usan un entorno de navegador simulado y renderizado Canvas nativo. **No sustituyen una partida manual en un navegador o teléfono real**: prueba los controles, el audio y el cambio de orientación en tus dispositivos antes de anunciar la versión.
 
-## Clasificaciones en línea · v83
+## Cuentas y Rankeds · v84 BETA
 
-En el menú, **Clasificaciones · Ranked** permite consultar Campaña, Caos e Infinito en Normal, Hardcore y Masoquista. Los modos con final se ordenan por tiempo; Infinito por mayor batallón superado y después por menor tiempo. Solo se muestran marcas verificadas y temporadas activas o cerradas.
+El menú tiene tres páginas: **Cuentas ← Inicio → Rankeds**. Puedes deslizar horizontalmente o usar los botones superiores. En Cuentas puedes registrarte, entrar y recuperar tu contraseña con correo electrónico; Gmail funciona como cualquier otro correo. No se solicita la contraseña del correo. Google OAuth no está habilitado en el proyecto.
 
-**Estado: preparación.** Las categorías y la base de lectura están creadas. Todavía no existe un validador del motor del juego ni se aceptan partidas competitivas. El interruptor de nueva partida aparece deshabilitado, y las partidas casuales y sus guardados mantienen su funcionamiento.
+Al crear un mundo, **Jugar para Rankeds · BETA** activa un cronómetro local de prueba. Se detiene en las ventanas que pausan el juego y aparece detenido en Ajustes. Se conserva al guardar y continuar. No convierte guardados anteriores en intentos oficiales ni publica resultados.
 
-La configuración pública de Supabase usa una clave publicable, no una contraseña ni una clave administrativa. F12 puede mostrar esta configuración sin conceder permisos de escritura en el ranking. Consulta [SECURITY.md](SECURITY.md) para conocer las protecciones y el trabajo pendiente.
+**Estado competitivo: pendiente de validación de partidas en servidor.** Las nueve tablas consultan únicamente marcas verificadas. Las categorías siguen cerradas: ningún tiempo calculado por el navegador se acepta como récord oficial. Consulta [SECURITY.md](SECURITY.md).
 
-Los archivos `supabase/sql/` documentan cambios ya aplicados al proyecto. No los ejecutes de nuevo sobre la misma base: se conservan para revisión y reproducción en un proyecto de pruebas.
+### Configuración de los correos de cuenta
 
-Pruebas: `node --test tests/ranked.test.cjs` y `node scripts/check-client-secrets.cjs`. No hay dependencias de Node para estas comprobaciones ni nuevas bibliotecas descargadas por el navegador.
+En el proyecto Supabase **Umbralia-ranked → Authentication → URL Configuration**, establece:
+
+- Site URL: `https://neliux.github.io/Umbralia/`
+- Redirect URLs: añade exactamente `https://neliux.github.io/Umbralia/`
+
+Este ajuste es necesario para que los enlaces de confirmación y recuperación vuelvan al juego. La conexión disponible permite trabajar con la base de datos, pero no editar esta configuración de Auth. El registro exige confirmar el correo. Comprueba un registro real y una recuperación tras configurar estas direcciones. No hemos enviado correos de prueba a terceras personas. Para abrir el registro a muchos jugadores, configura un proveedor SMTP propio y los controles de abuso desde Supabase; el envío incluido tiene límites.
+
+Las cuentas usan Supabase Auth. La contraseña se envía por HTTPS directamente a Auth y no se guarda en el juego. El SDK conserva la sesión en el navegador para permitir seguir conectado; cerrar sesión no borra mundos locales. **La cuenta no sincroniza ni respalda los mundos.**
+
+### Balance de v84
+
+- Faro de impulso: radio 210 → **270**.
+- Auto: bolas de fuego 32 → **28**; choque y protección se conservan.
+- Laptop: básicos **25 / 38 / 22 / 17 / 47**, según el modo. Dominio sin cambios.
+
+Se mantienen los nombres de las claves de guardado y se aceptan versiones anteriores. Se conservan los 19 audios originales del repositorio.
+
+### Desarrollo y comprobaciones
+
+GitHub Pages sirve directamente los archivos incluidos. No requiere instalar Node en producción.
+
+```sh
+npm ci
+npm run build
+npm test
+```
+
+`src/accounts.js` es la fuente del módulo de cuentas; `assets/ranked/accounts.js` es el bundle listo para el navegador. Las versiones de las dependencias están fijadas en `package-lock.json`. No añadas contraseñas ni claves administrativas a `config.js`.
+
+Los archivos `supabase/sql/` documentan migraciones ya aplicadas. No los ejecutes otra vez en la misma base.

@@ -1,6 +1,6 @@
 # Ranked: límites y protección
 
-El proyecto está en **preparación**. El menú permite consultar nueve clasificaciones, pero ninguna acepta partidas todavía. La temporada está en borrador y el inicio clasificatorio está deshabilitado. No existe un endpoint que acepte tiempos o apruebe récords enviados por jugadores.
+El proyecto tiene una **beta de cuentas, interfaz y cronómetro local**. El menú permite consultar nueve clasificaciones, pero ninguna acepta partidas todavía. La temporada está en borrador; el interruptor BETA activa únicamente un intento de prueba sin verificar. No existe un endpoint que acepte tiempos o apruebe récords enviados por jugadores.
 
 ## Información pública
 
@@ -34,7 +34,7 @@ La base y la consulta de tablas **no constituyen un sistema antitrampas completo
 1. Un motor de simulación validable fuera del navegador, con aleatoriedad y pasos de tiempo controlados.
 2. Un servicio que verifique identidad, acciones, recargas, recursos, progresión, finalización y tiempo, con límites de solicitudes y sesiones.
 3. Registro de partidas y reconexiones controlado por el servidor; no se importarán guardados locales como intentos oficiales.
-4. Integración y pruebas de inicio de sesión, protección contra registros automatizados y controles de abuso.
+4. Completar la configuración de redirecciones de Auth y probar confirmación, recuperación, controles de registros automatizados y abuso. Los formularios y la sesión de Auth ya están integrados.
 5. Pruebas de manipulación, repeticiones de peticiones, acceso entre cuentas y recuperación ante fallos.
 6. Un despliegue revisado del validador y una temporada vinculada a su versión y a la del juego.
 
