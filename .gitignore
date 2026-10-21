@@ -1,0 +1,10 @@
+# Local credentials and temporary deployment files never belong in the public game.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.supabase/
+node_modules/
+coverage/
+.DS_Store

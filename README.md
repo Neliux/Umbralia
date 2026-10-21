@@ -1,4 +1,4 @@
-# Umbralia: Ecos del Tiempo · v81
+# Umbralia: Ecos del Tiempo · v83
 
 Juego de acción y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfréntate a jefes con mecánicas propias. Incluye campaña, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.
 
@@ -7,9 +7,22 @@ Juego de acción y supervivencia para navegador: explora siete mundos, construye
 1. Descomprime el ZIP y sube **su contenido** a la raíz del repositorio: `index.html`, `config.js`, `.nojekyll`, `README.md` y la carpeta completa `assets`.
 2. Reemplaza los archivos anteriores, incluida la música. Conserva la dirección del juego y los datos del navegador para mantener tus partidas y trofeos. Antes de actualizar, exporta tus partidas como precaución.
 3. En **Settings → Pages → Deploy from a branch**, elige **main** y **/(root)** y guarda. Abre el enlace cuando termine el despliegue.
-4. El título y la insignia del menú deben mostrar **v81**. Si ves otra versión, recarga sin caché.
+4. El título y la insignia del menú deben mostrar **v83**. Si ves otra versión, recarga sin caché.
 
 No necesita instalación ni compilación. El JavaScript y los estilos están integrados en `index.html`. Prueba local: `python3 -m http.server 8000` y abre `http://localhost:8000`.
+
+## Cambios de v82
+
+- **Recomendable** encima de la tarjeta de campaña y **Beta** encima de Caos.
+- El guardián del primer mundo de campaña tiene **20% menos vida**, **20% menos daño** y sus recargas avanzan un 20% más despacio: aproximadamente **25% más tiempo entre ataques**. Tiene una breve espera inicial antes de disparar. El ajuste se aplica una sola vez también a jefes ya guardados. No reduce las estadísticas de ese jefe en Caos ni las del Vacío.
+- El jugador puede **reparar el núcleo durante un jefe de campaña** acercándose y pulsando **Interactuar / E**. Se conservan el coste y las esperas de reparación: 3 s en Fácil/Normal, 5 s en Hardcore y 6 s en Masoquista. Un núcleo ausente no puede repararse. La excepción no desbloquea reparaciones generales de estructuras durante combate.
+- El Beyblade solo concede su velocidad de giro **mientras está ejecutando el ataque**, no por llevarlo equipado. Se conservan 9 de daño base por pulso y 4,2 s de recarga.
+- Corregida una causa reproducible de la ventana de error de Caos: el escudo eliminaba proyectiles dentro de un recorrido por índices y dejaba referencias inválidas. Los recorridos usan instantáneas, comprueban que el proyectil siga activo y lo eliminan por identidad. También se protege el recorrido de enemigos ante bajas encadenadas.
+- La recuperación automática de errores de **Caos infinito** carga su propia partida. El límite de un intento por batallón también distingue modo y partida; no sustituye Infinito por Caos normal.
+- Las primeras misiones muestran cantidades y pasos concretos: **Interactuar / E**, **Crafteo / C → Armas**, **Construir / B → EXPANDIR ISLA**, y **Crafteo → Bengala**. Las partidas anteriores conservan su progreso de tutorial.
+- **EXPANDIR ISLA** tiene una tarjeta destacada, botón grande, nivel de ampliación y coste visible. Conserva sus precios y requisitos.
+- Aserradero, cultivos, mina, fábrica de hierro y mercado producen **12% más rápido**: su intervalo se divide entre 1,12. La fábrica de diamantes conserva su intervalo de 22 segundos.
+- Los 19 audios son **idénticos a los de v81**, con sus rutas originales. Se mantienen partidas, récords y trofeos.
 
 ## Caos normal e infinito
 
@@ -105,8 +118,22 @@ Activa el sonido en ajustes e interactúa con la página para autorizar la repro
 
 Activa **Settings → General → Features → Issues** en GitHub. El botón de reportes prepara el contenido; el jugador debe publicarlo, no se envía automáticamente. En `config.js` puedes indicar la URL de tu repositorio o un formulario externo. Para GitHub Pages estándar, el repositorio se detecta automáticamente.
 
-## Verificación de v81
+## Verificación de v82
 
-Se comprobaron arranque y sintaxis, 90 batallones consecutivos, ausencia de la Pelota Roja en Infinito, final del Caos normal, límites y elección de mejoras, cambio de armas, simulación de todos los jefes elegibles y efectos, guardado independiente, continuación por encima del batallón 30, respaldo ante corrupción, rechazo de estados inválidos y carga de una partida generada con el código v80. También se revisaron las ramas de diálogo, fase negra, reproducción acelerada y restablecimiento del tempo, rutas y decodificación de los audios e integridad del ZIP.
+En v81 se comprobaron arranque y sintaxis, 90 batallones consecutivos, ausencia de la Pelota Roja en Infinito, final del Caos normal, límites y elección de mejoras, cambio de armas, simulación de todos los jefes elegibles y efectos, guardado independiente, continuación por encima del batallón 30, respaldo ante corrupción, rechazo de estados inválidos y carga de una partida generada con el código v80. También se revisaron las ramas de diálogo, fase negra, reproducción acelerada y restablecimiento del tempo, rutas y decodificación de los audios e integridad del ZIP.
+
+En v82 se reprodujo y verificó la corrección del fallo de proyectiles con escudos en ambos modos de Caos, incluidos proyectiles especiales. Se probaron los cambios de velocidad, reparación, daño del primer jefe, generadores, misiones, continuidad desde v81 y recuperación de Infinito. También se ejecutaron 108 combinaciones de jefes/armas/modos y 26 escenarios con grupos densos de enemigos, mejoras y armas distintas, sin excepciones en esas simulaciones.
 
 Las pruebas de lógica usan un entorno de navegador simulado y renderizado Canvas nativo. **No sustituyen una partida manual en un navegador o teléfono real**: prueba los controles, el audio y el cambio de orientación en tus dispositivos antes de anunciar la versión.
+
+## Clasificaciones en línea · v83
+
+En el menú, **Clasificaciones · Ranked** permite consultar Campaña, Caos e Infinito en Normal, Hardcore y Masoquista. Los modos con final se ordenan por tiempo; Infinito por mayor batallón superado y después por menor tiempo. Solo se muestran marcas verificadas y temporadas activas o cerradas.
+
+**Estado: preparación.** Las categorías y la base de lectura están creadas. Todavía no existe un validador del motor del juego ni se aceptan partidas competitivas. El interruptor de nueva partida aparece deshabilitado, y las partidas casuales y sus guardados mantienen su funcionamiento.
+
+La configuración pública de Supabase usa una clave publicable, no una contraseña ni una clave administrativa. F12 puede mostrar esta configuración sin conceder permisos de escritura en el ranking. Consulta [SECURITY.md](SECURITY.md) para conocer las protecciones y el trabajo pendiente.
+
+Los archivos `supabase/sql/` documentan cambios ya aplicados al proyecto. No los ejecutes de nuevo sobre la misma base: se conservan para revisión y reproducción en un proyecto de pruebas.
+
+Pruebas: `node --test tests/ranked.test.cjs` y `node scripts/check-client-secrets.cjs`. No hay dependencias de Node para estas comprobaciones ni nuevas bibliotecas descargadas por el navegador.
