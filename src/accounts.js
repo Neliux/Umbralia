@@ -16,4 +16,4 @@ function render(mode='login',message=''){
  status(message||(!client?'No se pudo iniciar el servicio de cuentas. Puedes jugar sin cuenta.':''));
 }
 if(client){client.auth.onAuthStateChange((event,s)=>{session=s;if(event==='PASSWORD_RECOVERY'){recovery=true;window.UmbraliaMenu84?.go(0);}if(root)render();});client.auth.getSession().then(({data,error})=>{if(!error){session=data.session;if(root)render();}}).catch(()=>{});}
-window.UmbraliaAccounts84={mount(element){root=element;render();},signedIn:()=>!!session,accessToken:async()=>{const {data,error}=await client.auth.getSession();if(error)throw error;return data.session?.access_token||null;}};
+window.UmbraliaAccounts84={mount(element){root=element;render();},signedIn:()=>!!session,emailForDialogue:()=>session?.user?.email||null,accessToken:async()=>{const {data,error}=await client.auth.getSession();if(error)throw error;return data.session?.access_token||null;}};

@@ -1,4 +1,4 @@
-# Umbralia: Ecos del Tiempo · v91
+# Umbralia: Ecos del Tiempo · v92
 
 Juego de acción y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfréntate a jefes con mecánicas propias. Incluye campaña, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.
 
@@ -7,9 +7,18 @@ Juego de acción y supervivencia para navegador: explora siete mundos, construye
 1. Descomprime el ZIP y sube **su contenido** a la raíz del repositorio: `index.html`, `config.js`, `.nojekyll`, `README.md` y la carpeta completa `assets`.
 2. Reemplaza los archivos anteriores, incluida la música. Conserva la dirección del juego y los datos del navegador para mantener tus partidas y trofeos. Antes de actualizar, exporta tus partidas como precaución.
 3. En **Settings → Pages → Deploy from a branch**, elige **main** y **/(root)** y guarda. Abre el enlace cuando termine el despliegue.
-4. El título y la insignia del menú deben mostrar **v91**. Si ves otra versión, recarga sin caché.
+4. El título y la insignia del menú deben mostrar **v92**. Si ves otra versión, recarga sin caché.
 
 No necesita instalación ni compilación. El motor está en `index.html` y los módulos de cuentas y clasificación están en `assets/ranked/`. Prueba local: `python3 -m http.server 8000` y abre `http://localhost:8000`.
+
+## Cambios de v92
+
+- La Pelota Roja comenta pistas ordinarias del navegador y el correo de la sesión iniciada, solo en pantalla. Su cara se deforma progresivamente al perder vida y prolongarse el combate.
+- En Caos local, los jefes derrotados quedan inmóviles 0,5 s, explotan con la cámara centrada en ellos y abren la recompensa 1 s después. La cámara vuelve al jugador antes de elegir. El jefe final de Caos normal conduce a la victoria tras la misma escena.
+- Mejoras de Caos normal e infinito hasta nivel 3, con evoluciones en los niveles 2 y 3. Los guardados anteriores se adaptan y las exclusivas siguen siendo únicas.
+- Gato explosivo: un gato cada 10 s, 50 de daño y radio 85; nivel 2 cada 8 s, 75 y radio 110; nivel 3 dos gatos cada 6 s, 100 por gato y radio 140.
+- Satélite de pulso: 20 de daño cada 8 s en radio 120; nivel 2, 30 cada 6 s en radio 150 y ralentización; nivel 3, 45 cada 4 s en radio 190, limpieza de 6 proyectiles y aturdimiento breve.
+- Las reglas competitivas actuales permanecen vinculadas a su verificador anterior.
 
 ## Cambios de v91
 
