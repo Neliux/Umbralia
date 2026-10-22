@@ -1,4 +1,4 @@
-# Umbralia: Ecos del Tiempo · v89
+# Umbralia: Ecos del Tiempo · v90
 
 Juego de acción y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfréntate a jefes con mecánicas propias. Incluye campaña, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.
 
@@ -7,9 +7,17 @@ Juego de acción y supervivencia para navegador: explora siete mundos, construye
 1. Descomprime el ZIP y sube **su contenido** a la raíz del repositorio: `index.html`, `config.js`, `.nojekyll`, `README.md` y la carpeta completa `assets`.
 2. Reemplaza los archivos anteriores, incluida la música. Conserva la dirección del juego y los datos del navegador para mantener tus partidas y trofeos. Antes de actualizar, exporta tus partidas como precaución.
 3. En **Settings → Pages → Deploy from a branch**, elige **main** y **/(root)** y guarda. Abre el enlace cuando termine el despliegue.
-4. El título y la insignia del menú deben mostrar **v89**. Si ves otra versión, recarga sin caché.
+4. El título y la insignia del menú deben mostrar **v90**. Si ves otra versión, recarga sin caché.
 
 No necesita instalación ni compilación. El motor está en `index.html` y los módulos de cuentas y clasificación están en `assets/ranked/`. Prueba local: `python3 -m http.server 8000` y abre `http://localhost:8000`.
+
+## Cambios de v90
+
+- Corregidas las tres defensas del sexto mundo: los minijefes incidentales ya no ocultan el núcleo y no se mezclan con el encuentro final. Se reparan también guardados anteriores de esta zona.
+- El núcleo crece y respira tras cada defensa; al completar la tercera se transforma en el jefe.
+- Final con pantalla negra, pétalos, destellos dorados, texto y el audio proporcionado. «Quiero más…» abre el séptimo mundo tras un destello rojo. La escena se puede saltar.
+- Una bomba por oleada de campaña en Masoquista: 40 de vida; tras 4 s desarrolla patas, pasa a 100 de vida y corre hacia el jugador. Su contacto quita el 50 % de la vida máxima.
+- Se conservan los guardados y trofeos existentes. Ranked conserva las reglas actuales del servidor; estas mecánicas nuevas corresponden a la campaña local.
 
 ## Cambios de v82
 
