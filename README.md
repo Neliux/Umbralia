@@ -1,4 +1,4 @@
-# Umbralia: Ecos del Tiempo · v90
+# Umbralia: Ecos del Tiempo · v91
 
 Juego de acción y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfréntate a jefes con mecánicas propias. Incluye campaña, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.
 
@@ -7,9 +7,14 @@ Juego de acción y supervivencia para navegador: explora siete mundos, construye
 1. Descomprime el ZIP y sube **su contenido** a la raíz del repositorio: `index.html`, `config.js`, `.nojekyll`, `README.md` y la carpeta completa `assets`.
 2. Reemplaza los archivos anteriores, incluida la música. Conserva la dirección del juego y los datos del navegador para mantener tus partidas y trofeos. Antes de actualizar, exporta tus partidas como precaución.
 3. En **Settings → Pages → Deploy from a branch**, elige **main** y **/(root)** y guarda. Abre el enlace cuando termine el despliegue.
-4. El título y la insignia del menú deben mostrar **v90**. Si ves otra versión, recarga sin caché.
+4. El título y la insignia del menú deben mostrar **v91**. Si ves otra versión, recarga sin caché.
 
 No necesita instalación ni compilación. El motor está en `index.html` y los módulos de cuentas y clasificación están en `assets/ranked/`. Prueba local: `python3 -m http.server 8000` y abre `http://localhost:8000`.
+
+## Cambios de v91
+
+- Pelota Roja más aterradora: ojos hundidos, pupilas estrechas, grietas y una sonrisa de dientes irregulares. También se muestra en gráficos simples y Caos.
+- Los cambios de oración del final se retrasan un segundo respecto de v90, conservando la sincronización con el reloj del audio.
 
 ## Cambios de v90
 
