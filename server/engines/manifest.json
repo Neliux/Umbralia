@@ -1,8 +1,9 @@
 {
   "build": "87-replay-v1",
-  "sha256": "bd9c7dbb1e81b0d70393bf5e586aa93b713a45d464c05f1546c15b55c41b5cad",
+  "sha256": "2a90c7c36b2b1e13a606e62ea03a0a40b676806d9c57baa557f587528b04ccce",
   "rulesets": [
     "87",
-    "88"
+    "88",
+    "89"
   ]
 }

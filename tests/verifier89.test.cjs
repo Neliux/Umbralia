@@ -1,0 +1,5 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('fs'),{verifyReplay,canonical,hash}=require('../server/verify-queue.cjs');
+const html=fs.readFileSync('server/engines/v87.html','utf8');const meta={mode:'infinite',difficulty:'normal',weapon:'axe',seed:1,epoch:1792666748738,width:1000,height:700,rules89:true};
+const job=events=>({build:'87-replay-v1',meta,wall_ms:100000,batches:[{sequence:1,digest:hash(canonical(events)),events}]});
+test('verifier retries infrastructure failures without declaring the player invalid',()=>{assert.deepEqual(verifyReplay(job([]),html+'changed'),{ok:false,code:'service_retry'});});
+test('verifier distinguishes altered data, missing controls and incomplete categories',()=>{const changed=job([{t:'f',n:1}]);changed.batches[0].digest='forged';assert.equal(verifyReplay(changed,html).code,'input_integrity');assert.equal(verifyReplay(job([{t:'e',kind:'click',target:{id:'missing'}}]),html).code,'replay_control');assert.equal(verifyReplay(job([{t:'f',n:1}]),html).code,'replay_end');});

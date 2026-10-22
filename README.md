@@ -1,4 +1,4 @@
-# Umbralia: Ecos del Tiempo · v88
+# Umbralia: Ecos del Tiempo · v89
 
 Juego de acción y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfréntate a jefes con mecánicas propias. Incluye campaña, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.
 
@@ -7,7 +7,7 @@ Juego de acción y supervivencia para navegador: explora siete mundos, construye
 1. Descomprime el ZIP y sube **su contenido** a la raíz del repositorio: `index.html`, `config.js`, `.nojekyll`, `README.md` y la carpeta completa `assets`.
 2. Reemplaza los archivos anteriores, incluida la música. Conserva la dirección del juego y los datos del navegador para mantener tus partidas y trofeos. Antes de actualizar, exporta tus partidas como precaución.
 3. En **Settings → Pages → Deploy from a branch**, elige **main** y **/(root)** y guarda. Abre el enlace cuando termine el despliegue.
-4. El título y la insignia del menú deben mostrar **v88**. Si ves otra versión, recarga sin caché.
+4. El título y la insignia del menú deben mostrar **v89**. Si ves otra versión, recarga sin caché.
 
 No necesita instalación ni compilación. El motor está en `index.html` y los módulos de cuentas y clasificación están en `assets/ranked/`. Prueba local: `python3 -m http.server 8000` y abre `http://localhost:8000`.
 
@@ -175,7 +175,7 @@ El Obelisco pasa de radio 84 a 97; el fuego del auto baja de 28 a 24 y la Empana
 
 Las pruebas de esta versión cubren intervalos, límites, combate, descanso, daño recibido, persistencia y precios en las cuatro dificultades. El cronómetro de Ranked sigue siendo una prueba local no verificada: la actualización de gatos no activa la competición oficial. La configuración de retorno de Auth y el servidor de simulación verificada siguen pendientes; no se sustituyen por una aceptación de puntuaciones del navegador.
 
-## Gatos dorados y acertijo · v88
+## Gatos dorados y acertijo · v89
 
 Los gatos tienen **42 de vida y 6 de daño**. La casa tiene **340 de vida base** y gana experiencia con las bajas de sus propios gatos. Mejora con **4, 9 y 16 bajas acumuladas**, con detalles dorados y estrellas. La primera mejora aumenta la vida de los gatos a **54**; la segunda aumenta su velocidad de **72 a 90**; la tercera permite **4 gatos vivos por casa**, manteniendo el máximo de tres casas. Las mejoras afectan a los compañeros existentes y a los nuevos. Los gatos tienen siluetas redondeadas más sencillas; mantienen las poses de caminar, atacar y dormir. Los guardados antiguos se adaptan una sola vez, conservando la proporción de vida.
 
@@ -204,3 +204,10 @@ El correo de confirmación y recuperación debe estar configurado en Supabase Au
 El robot de Caos normal e infinito sigue combatiendo incluso por debajo del 25% de vida; vuelve a luchar inmediatamente si un guardado lo dejó en retirada. Conserva su daño, vida y reaparición. En campaña mantiene su comportamiento de mantenimiento y retirada. Las puertas abren sus hojas al acercarte y las cierran al alejarte, sin cambiar colisiones ni estadísticas.
 
 La nueva regla de robots se guarda en los metadatos del intento competitivo como `rules88`. El protocolo de reproducción sigue siendo `87-replay-v1`: el verificador conserva la lógica anterior cuando falta ese indicador, para aceptar intentos iniciados antes del parche. No se reinician la temporada, los récords ni los mundos.
+
+## Parche v89
+
+- Gatos con 68 de vida y 10 de daño; la primera mejora da 88 de vida. Regeneran 3 de vida por segundo únicamente mientras duermen, hasta su máximo. Las heridas se conservan proporcionalmente al actualizar y los gatos derrotados no resucitan.
+- Corregido el registro de pausa de Caos al pulsar el indicador superior: antes no se incluía entre los controles, lo que podía invalidar una partida legítima. Se registran también pérdidas de foco y liberaciones del puntero. Los movimientos del cursor sobre botones sin función de arrastre ya no llenan el registro.
+- Rankeds muestra el estado del último intento de la cuenta y el motivo de rechazo. Los fallos internos del servicio vuelven a la cola, sin rechazar automáticamente la partida. GitHub puede retrasar la ejecución del verificador.
+- Los registros antiguos sin una acción de pausa no pueden reconstruirse con exactitud y no se aprueban manualmente. Los cambios de gatos usan metadatos `rules89`; los intentos anteriores conservan sus estadísticas. Se mantienen los nueve rankings, los mundos y los 19 audios.

@@ -8,6 +8,7 @@ begin
  update public.ranked_categories set ranked_enabled=true;
  execute 'set local role service_role';
  r:=public.ranked_backend87('begin',u,'{"category":"chaos_normal","alias":"Test87","meta":{"weapon":"axe","width":1000,"height":700}}');
+ if public.ranked_backend87('status',u)->>'id' is distinct from r->>'id' then raise exception 'Latest owned status missing';end if;
  blocked:=false;begin perform public.ranked_backend87('status',v,jsonb_build_object('id',r->>'id'));exception when others then blocked:=true;end;
  if not blocked then raise exception 'Cross-account read';end if;
  blocked:=false;begin perform public.ranked_backend87('append',u,jsonb_build_object('id',r->>'id','sequence',2,'events','[]'::jsonb,'digest','test'));exception when others then blocked:=true;end;
@@ -22,6 +23,8 @@ begin
  if job->>'id'<>r->>'id' then raise exception 'Wrong queue item';end if;
  blocked:=false;begin perform public.ranked_backend87('verdict',null,jsonb_build_object('id',r->>'id','lease',gen_random_uuid(),'worker','test','ok',true,'elapsed_ms',10,'cleared_battalions',30,'digest',repeat('a',64)));exception when others then blocked:=true;end;
  if not blocked then raise exception 'Unclaimed verdict accepted';end if;
+ perform public.ranked_backend87('verdict',null,jsonb_build_object('id',r->>'id','lease',job->>'lease','worker','test','ok',false,'code','service_retry'));
+ if public.ranked_backend87('status',u)->>'status'<>'finished' then raise exception 'Service error rejected a valid queued attempt';end if;
  perform public.ranked_backend87('verdict',null,jsonb_build_object('id',r->>'id','lease',job->>'lease','worker','test','ok',true,'elapsed_ms',10,'cleared_battalions',30,'digest',repeat('a',64)));
  if (public.ranked_backend87('status',u,jsonb_build_object('id',r->>'id'))->>'verified')<>'true' then raise exception 'Verified status missing';end if;
  execute 'reset role';

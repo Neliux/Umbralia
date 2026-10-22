@@ -8,4 +8,7 @@ const clearTimeout=id=>{if(clock87.active)clock87.timers.delete(id);else window.
 
 // Normalize transcendental results across Chromium and the Node verifier.
 for(const name of ["sin","cos","tan","atan2","atan","acos","asin","sqrt","hypot","pow","exp","log","log2","log10","cbrt"]){Math[name]=(...args)=>{const value=window.Math[name](...args);return clock87.active&&Number.isFinite(value)?window.Math.round(value*1e10)/1e10:value;};}
-for(const kind of ['click','input','change','keydown','keyup','pointerdown','pointermove','pointerup','pointercancel'])window.addEventListener(kind,recordInput87,{capture:true});
+for(const kind of ['click','input','change','keydown','keyup','pointerdown','pointermove','pointerup','pointercancel','lostpointercapture'])window.addEventListener(kind,recordInput87,{capture:true});
+
+window.addEventListener('blur',()=>{if(clock87.active&&!clock87.replay&&!clock87.ended)append87({t:'blur'});},{capture:true});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&clock87.active&&!clock87.replay&&!clock87.ended)append87({t:'blur'});},{capture:true});

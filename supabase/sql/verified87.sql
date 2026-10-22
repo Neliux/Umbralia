@@ -19,9 +19,9 @@ begin
    values(p_user,c.id,s.id,'active',meta->>'seed',s.game_build,s.validator_build,now(),jsonb_build_object('meta',meta,'alias',alias_name)) returning * into r;
   return jsonb_build_object('id',r.id,'meta',meta,'build',r.game_build);
  elsif p_action in ('append','finish','status','abandon') then
-  select * into r from ranked_private.runs where id=(p_body->>'id')::uuid and user_id=p_user for update;
-  if not found then raise exception 'Unknown attempt'; end if;
-  if p_action='status' then return jsonb_build_object('status',r.status,'verified',r.verified_at is not null,'reason',r.checkpoint->>'reason'); end if;
+  select * into r from ranked_private.runs where user_id=p_user and (id=(p_body->>'id')::uuid or (p_action='status' and p_body->>'id' is null)) order by created_at desc limit 1 for update;
+  if not found then if p_action='status' and p_body->>'id' is null then return '{"status":"none"}'::jsonb;end if;raise exception 'Unknown attempt'; end if;
+  if p_action='status' then return jsonb_build_object('id',r.id,'status',r.status,'verified',r.verified_at is not null,'reason',r.checkpoint->>'reason','code',r.checkpoint->>'code'); end if;
   if p_action='abandon' then
    update ranked_private.runs set status='abandoned',finished_at=now() where id=r.id and status='active';return '{"ok":true}'::jsonb;
   end if;
@@ -29,14 +29,15 @@ begin
   if r.status<>'active' or r.started_at<now()-interval '24 hours' then raise exception 'Attempt closed'; end if;
   if p_action='append' then
    n:=(p_body->>'sequence')::bigint;data:=p_body->'events';
-   if n<1 or n>256 or jsonb_typeof(data)<>'array' or jsonb_array_length(data)>512 or octet_length(data::text)>60000 then raise exception 'Batch limit'; end if;
+   if n<1 or n>2048 or jsonb_typeof(data)<>'array' or jsonb_array_length(data)>512 or octet_length(data::text)>60000 then raise exception 'Batch limit'; end if;
    if n<=r.last_sequence then
     if exists(select 1 from ranked_private.input_batches where run_id=r.id and sequence=n and digest=p_body->>'digest') then return jsonb_build_object('sequence',n); end if;
     raise exception 'Batch mismatch';
    end if;
    if n<>r.last_sequence+1 then raise exception 'Batch sequence'; end if;
+   if coalesce((r.checkpoint->>'input_bytes')::bigint,0)+octet_length(data::text)>33554432 then raise exception 'Input budget';end if;
    insert into ranked_private.input_batches(run_id,sequence,digest,payload) values(r.id,n,p_body->>'digest',data);
-   update ranked_private.runs set last_sequence=n where id=r.id;return jsonb_build_object('sequence',n);
+   update ranked_private.runs set last_sequence=n,checkpoint=checkpoint||jsonb_build_object('input_bytes',coalesce((checkpoint->>'input_bytes')::bigint,0)+octet_length(data::text)) where id=r.id;return jsonb_build_object('sequence',n);
   end if;
   if r.last_sequence<1 or r.last_sequence<>(p_body->>'sequence')::bigint then raise exception 'Missing inputs'; end if;
   update ranked_private.runs set status='finished',finished_at=now() where id=r.id;return '{"status":"pending"}'::jsonb;
@@ -52,7 +53,14 @@ begin
   select * into r from ranked_private.runs where id=(p_body->>'id')::uuid for update;
   if not found or r.status<>'finished' or r.verified_at is not null or r.checkpoint->>'lease' is distinct from p_body->>'lease' or r.checkpoint->>'worker' is distinct from p_body->>'worker' then raise exception 'Invalid lease';end if;
   ok:=coalesce((p_body->>'ok')::boolean,false);elapsed:=(p_body->>'elapsed_ms')::bigint;cleared:=(p_body->>'cleared_battalions')::int;
-  if not ok then update ranked_private.runs set status='rejected',checkpoint=checkpoint||jsonb_build_object('reason','La reproducción no superó las reglas de la categoría.') where id=r.id;return '{"ok":true}'::jsonb;end if;
+  if not ok then
+   if p_body->>'code'='service_retry' then
+    update ranked_private.runs set checkpoint=checkpoint||jsonb_build_object('reason','El verificador está reintentando la partida; aún no ha sido rechazada.','code','service_retry','lease_until',now()+interval '10 minutes') where id=r.id;
+   else
+    update ranked_private.runs set status='rejected',checkpoint=checkpoint||jsonb_build_object('code',case when p_body->>'code' in ('input_integrity','input_limit','replay_control','replay_end','rules_changed') then p_body->>'code' else 'replay_end' end,'reason',case p_body->>'code' when 'input_integrity' then 'El registro de controles llegó incompleto o alterado.' when 'input_limit' then 'El intento superó los límites de registro de la beta.' when 'replay_control' then 'No se pudo reproducir un control. Actualiza el juego antes de iniciar otro intento.' when 'rules_changed' then 'La partida utilizó códigos o cambió las reglas de su categoría.' else 'La reproducción no confirmó el final de esta categoría.' end) where id=r.id;
+   end if;
+   return '{"ok":true}'::jsonb;
+  end if;
   if elapsed<=0 or cleared<0 or length(p_body->>'digest')<>64 then raise exception 'Invalid verdict'; end if;
   update ranked_private.runs set elapsed_ms=elapsed,cleared_battalions=cleared,verified_at=now(),evidence_digest=p_body->>'digest' where id=r.id returning * into r;
   insert into public.ranked_records(run_id,user_id,category_id,season_id,alias,elapsed_ms,cleared_battalions,achieved_at)

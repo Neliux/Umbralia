@@ -21,3 +21,7 @@ Esto verifica las reglas y el resultado de la simulación, pero **no demuestra q
 La configuración de correo, proveedor SMTP, URLs de confirmación/recuperación y protección contra contraseñas filtradas se administra en Supabase Auth. No se deben desactivar confirmaciones como sustituto de configurar el correo.
 
 Ejecutar `npm test`. Si se cambia el motor competitivo, actualizar el archivo congelado, su manifiesto, el identificador de versión y la temporada; no mezclar versiones. Los secretos publicados por accidente deben revocarse, aunque se eliminen del último commit.
+
+## Correcciones v89
+
+El registro incluye la pausa del indicador superior de Caos, pérdidas de foco y liberaciones de puntero. Se omiten movimientos del cursor sobre botones que no controlan el apuntado. El tiempo competitivo nuevo excluye los menús. La regla de gatos y cronómetro se identifica mediante `rules89`; los intentos anteriores mantienen sus reglas. Los fallos internos del verificador dejan el intento en cola para reintentar. Los fallos de integridad y de reproducción se distinguen con códigos; no se aprueban registros antiguos a los que les falten acciones. El estado del último intento se consulta únicamente tras comprobar su propietario. La beta admite más bloques pequeños con un presupuesto total de 32 MiB por intento.
