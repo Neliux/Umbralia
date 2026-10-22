@@ -1,4 +1,4 @@
-# Umbralia: Ecos del Tiempo · v86
+# Umbralia: Ecos del Tiempo · v87
 
 Juego de acción y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfréntate a jefes con mecánicas propias. Incluye campaña, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.
 
@@ -7,7 +7,7 @@ Juego de acción y supervivencia para navegador: explora siete mundos, construye
 1. Descomprime el ZIP y sube **su contenido** a la raíz del repositorio: `index.html`, `config.js`, `.nojekyll`, `README.md` y la carpeta completa `assets`.
 2. Reemplaza los archivos anteriores, incluida la música. Conserva la dirección del juego y los datos del navegador para mantener tus partidas y trofeos. Antes de actualizar, exporta tus partidas como precaución.
 3. En **Settings → Pages → Deploy from a branch**, elige **main** y **/(root)** y guarda. Abre el enlace cuando termine el despliegue.
-4. El título y la insignia del menú deben mostrar **v86**. Si ves otra versión, recarga sin caché.
+4. El título y la insignia del menú deben mostrar **v87**. Si ves otra versión, recarga sin caché.
 
 No necesita instalación ni compilación. El motor está en `index.html` y los módulos de cuentas y clasificación están en `assets/ranked/`. Prueba local: `python3 -m http.server 8000` y abre `http://localhost:8000`.
 
@@ -130,9 +130,7 @@ Las pruebas de lógica usan un entorno de navegador simulado y renderizado Canva
 
 El menú tiene tres páginas: **Cuentas ← Inicio → Rankeds**. Puedes deslizar horizontalmente o usar los botones superiores. En Cuentas puedes registrarte, entrar y recuperar tu contraseña con correo electrónico; Gmail funciona como cualquier otro correo. No se solicita la contraseña del correo. Google OAuth no está habilitado en el proyecto.
 
-Al crear un mundo, **Jugar para Rankeds · BETA** activa un cronómetro local de prueba. Se detiene en las ventanas que pausan el juego y aparece detenido en Ajustes. Se conserva al guardar y continuar. No convierte guardados anteriores en intentos oficiales ni publica resultados.
-
-**Estado competitivo: pendiente de validación de partidas en servidor.** Las nueve tablas consultan únicamente marcas verificadas. Las categorías siguen cerradas: ningún tiempo calculado por el navegador se acepta como récord oficial. Consulta [SECURITY.md](SECURITY.md).
+Al crear un mundo, **Jugar para Rankeds · BETA** inicia un intento nuevo con cuenta y conexión. El cronómetro se pausa en los menús. Solo se publican resultados derivados de la reproducción de controles en el servidor. Continuar un guardado es una partida local y no reanuda el intento competitivo. Consulta [SECURITY.md](SECURITY.md).
 
 ### Configuración de los correos de cuenta
 
@@ -177,7 +175,7 @@ El Obelisco pasa de radio 84 a 97; el fuego del auto baja de 28 a 24 y la Empana
 
 Las pruebas de esta versión cubren intervalos, límites, combate, descanso, daño recibido, persistencia y precios en las cuatro dificultades. El cronómetro de Ranked sigue siendo una prueba local no verificada: la actualización de gatos no activa la competición oficial. La configuración de retorno de Auth y el servidor de simulación verificada siguen pendientes; no se sustituyen por una aceptación de puntuaciones del navegador.
 
-## Gatos dorados y acertijo · v86
+## Gatos dorados y acertijo · v87
 
 Los gatos tienen **42 de vida y 6 de daño**. La casa tiene **340 de vida base** y gana experiencia con las bajas de sus propios gatos. Mejora con **4, 9 y 16 bajas acumuladas**, con detalles dorados y estrellas. La primera mejora aumenta la vida de los gatos a **54**; la segunda aumenta su velocidad de **72 a 90**; la tercera permite **4 gatos vivos por casa**, manteniendo el máximo de tres casas. Las mejoras afectan a los compañeros existentes y a los nuevos. Los gatos tienen siluetas redondeadas más sencillas; mantienen las poses de caminar, atacar y dormir. Los guardados antiguos se adaptan una sola vez, conservando la proporción de vida.
 
@@ -186,3 +184,17 @@ En el mundo 4, validar los valores del altar y acertar cada nota inicia una defe
 Todos los generadores, incluido el de diamantes, producen **un 20% más rápido**: su tiempo de ciclo se divide entre 1,2. La cantidad generada por ciclo no cambia.
 
 Se mantienen los audios y los límites actuales de la beta de Rankeds. La confirmación/recuperación por correo sigue requiriendo configurar las URLs indicadas arriba; no se ha confirmado una sesión administrativa en el navegador.
+
+## Actualización v87
+
+- Rankeds BETA: inicio autenticado, registro de controles, cola privada y reproducción del motor en GitHub Actions antes de publicar la mejor marca. Nueve clasificaciones separadas por modo y dificultad; el cronómetro se pausa en menús. Puede tardar varios minutos. Ver `SECURITY.md` para límites y operación.
+- Casa de gatos desde expansión 2; gatos con 54 de vida y 8 de daño, 70 de vida en la primera mejora. Las tres mejoras añaden detalles dorados a los gatos.
+- Expansión de dominio de Laptop con anillos, pulsos y paneles adicionales, sin cambiar su daño ni recarga.
+- Más insectos decorativos según las mejoras del núcleo, hasta cinco. Se esconden en recursos o estructuras antes de desaparecer. Gráficos simples elimina insectos y luciérnagas.
+- Las músicas mantienen las mismas rutas y archivos. Guardados y trofeos anteriores siguen siendo compatibles.
+
+### Servicio competitivo
+
+La función `ranked-api` de Supabase controla sesiones y bloques; `supabase/sql/verified87.sql` contiene la migración interna. `.github/workflows/ranked-verify.yml` reproduce la cola con identidad OIDC, sin guardar claves administrativas en GitHub. `server/engines/manifest.json` fija el motor admitido. El frontend no requiere compilación para jugar. Para desarrollar los módulos: `npm ci`, `npm run build`, `npm test`.
+
+El correo de confirmación y recuperación debe estar configurado en Supabase Auth (Site URL: `https://neliux.github.io/Umbralia/`, mismo destino en Redirect URLs). El SMTP predeterminado de Supabase puede restringir destinatarios; el envío público requiere un proveedor de correo configurado. No se incluyen credenciales SMTP en este repositorio.
