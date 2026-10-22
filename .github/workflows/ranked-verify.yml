@@ -2,7 +2,7 @@ name: Verify Ranked replays
 on:
   push:
     branches: [main]
-    paths: ['server/**', 'src/ranked/**', '.github/workflows/ranked-verify.yml', 'package-lock.json']
+    paths: ['server/**', 'src/ranked/**', '.github/workflows/ranked-verify.yml', 'package-lock.json', 'index.html', 'assets/ranked/**', 'tests/**']
   schedule:
     - cron: '*/10 * * * *'
   workflow_dispatch:
