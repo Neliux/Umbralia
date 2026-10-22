@@ -1,10 +1,25 @@
 name: Verify Ranked replays
 on:
+  push:
+    branches: [main]
+    paths: ['server/**', 'src/ranked/**', '.github/workflows/ranked-verify.yml', 'package-lock.json']
+  schedule:
+    - cron: '*/10 * * * *'
   workflow_dispatch:
 permissions:
   contents: read
+  id-token: write
+concurrency:
+  group: ranked-verifier
+  cancel-in-progress: false
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 18
     steps:
-      - run: echo 'Ranked verifier configuration pending implementation'
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm test
+      - run: node server/verify-queue.cjs

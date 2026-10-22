@@ -1,0 +1,38 @@
+begin;
+do $test$
+declare u uuid:=gen_random_uuid();v uuid:=gen_random_uuid();s uuid:=gen_random_uuid();r jsonb;job jsonb;x jsonb;blocked boolean;
+begin
+ if exists(select 1 from pg_trigger where tgrelid='auth.users'::regclass and not tgisinternal) then raise exception 'Unexpected Auth triggers';end if;
+ insert into auth.users(id,aud,role) values(u,'authenticated','authenticated'),(v,'authenticated','authenticated');
+ insert into public.ranked_seasons(id,slug,name,status,game_build,validator_build) values(s,'test87-'||s,'Temporary test','active','87-replay-v1','87-replay-v1');
+ update public.ranked_categories set ranked_enabled=true;
+ execute 'set local role service_role';
+ r:=public.ranked_backend87('begin',u,'{"category":"chaos_normal","alias":"Test87","meta":{"weapon":"axe","width":1000,"height":700}}');
+ blocked:=false;begin perform public.ranked_backend87('status',v,jsonb_build_object('id',r->>'id'));exception when others then blocked:=true;end;
+ if not blocked then raise exception 'Cross-account read';end if;
+ blocked:=false;begin perform public.ranked_backend87('append',u,jsonb_build_object('id',r->>'id','sequence',2,'events','[]'::jsonb,'digest','test'));exception when others then blocked:=true;end;
+ if not blocked then raise exception 'Sequence gap accepted';end if;
+ x:=jsonb_build_object('id',r->>'id','sequence',1,'events','[{"t":"f","n":1}]'::jsonb,'digest',repeat('a',64));
+ perform public.ranked_backend87('append',u,x);perform public.ranked_backend87('append',u,x);
+ blocked:=false;begin perform public.ranked_backend87('append',u,x||'{"digest":"different"}'::jsonb);exception when others then blocked:=true;end;
+ if not blocked then raise exception 'Changed duplicate accepted';end if;
+ perform public.ranked_backend87('finish',u,jsonb_build_object('id',r->>'id','sequence',1));
+ perform public.ranked_backend87('finish',u,jsonb_build_object('id',r->>'id','sequence',1));
+ job:=public.ranked_backend87('claim',null,'{"worker":"test"}');
+ if job->>'id'<>r->>'id' then raise exception 'Wrong queue item';end if;
+ blocked:=false;begin perform public.ranked_backend87('verdict',null,jsonb_build_object('id',r->>'id','lease',gen_random_uuid(),'worker','test','ok',true,'elapsed_ms',10,'cleared_battalions',30,'digest',repeat('a',64)));exception when others then blocked:=true;end;
+ if not blocked then raise exception 'Unclaimed verdict accepted';end if;
+ perform public.ranked_backend87('verdict',null,jsonb_build_object('id',r->>'id','lease',job->>'lease','worker','test','ok',true,'elapsed_ms',10,'cleared_battalions',30,'digest',repeat('a',64)));
+ if (public.ranked_backend87('status',u,jsonb_build_object('id',r->>'id'))->>'verified')<>'true' then raise exception 'Verified status missing';end if;
+ execute 'reset role';
+ if not exists(select 1 from public.ranked_records where run_id=(r->>'id')::uuid and elapsed_ms=10) then raise exception 'Verified record missing';end if;
+ execute 'set local role anon';blocked:=false;
+ begin perform public.ranked_backend87('claim');exception when insufficient_privilege then blocked:=true;end;
+ if not blocked then raise exception 'Anon can claim';end if;
+ execute 'set local role authenticated';blocked:=false;
+ begin perform public.ranked_backend87('verdict');exception when insufficient_privilege then blocked:=true;end;
+ if not blocked then raise exception 'Authenticated can approve';end if;
+ execute 'reset role';
+end $test$;
+rollback;
+select 'Verified87 isolation, ordering, idempotency, lease and publication tests passed; fixtures rolled back' as result;
