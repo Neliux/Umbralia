@@ -24,7 +24,7 @@ Deno.serve(async req=>{
    if(action==='begin'){
     const m=body.meta;if(!m||!Number.isInteger(m.width)||!Number.isInteger(m.height)||m.width<240||m.height<240||m.width>4096||m.height>4096||typeof m.weapon!=='string'||m.weapon.length>40)throw Error('configuration');
     const settings:Record<string,boolean>={};for(const k of ['simpleGraphics57','autoCollect42','autoaim','touch','reducedMotion46'])if(typeof m.settings?.[k]==='boolean')settings[k]=m.settings[k];
-    body.meta={width:m.width,height:m.height,weapon:m.weapon,settings};
+    body.meta={width:m.width,height:m.height,weapon:m.weapon,settings,...(m.rules88===true?{rules88:true}:{})};
    }
    if(action==='append'){
     if(!Array.isArray(body.events)||body.events.length>512)throw Error('events');

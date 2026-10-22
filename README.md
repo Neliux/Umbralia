@@ -1,4 +1,4 @@
-# Umbralia: Ecos del Tiempo · v87
+# Umbralia: Ecos del Tiempo · v88
 
 Juego de acción y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfréntate a jefes con mecánicas propias. Incluye campaña, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.
 
@@ -7,7 +7,7 @@ Juego de acción y supervivencia para navegador: explora siete mundos, construye
 1. Descomprime el ZIP y sube **su contenido** a la raíz del repositorio: `index.html`, `config.js`, `.nojekyll`, `README.md` y la carpeta completa `assets`.
 2. Reemplaza los archivos anteriores, incluida la música. Conserva la dirección del juego y los datos del navegador para mantener tus partidas y trofeos. Antes de actualizar, exporta tus partidas como precaución.
 3. En **Settings → Pages → Deploy from a branch**, elige **main** y **/(root)** y guarda. Abre el enlace cuando termine el despliegue.
-4. El título y la insignia del menú deben mostrar **v87**. Si ves otra versión, recarga sin caché.
+4. El título y la insignia del menú deben mostrar **v88**. Si ves otra versión, recarga sin caché.
 
 No necesita instalación ni compilación. El motor está en `index.html` y los módulos de cuentas y clasificación están en `assets/ranked/`. Prueba local: `python3 -m http.server 8000` y abre `http://localhost:8000`.
 
@@ -175,7 +175,7 @@ El Obelisco pasa de radio 84 a 97; el fuego del auto baja de 28 a 24 y la Empana
 
 Las pruebas de esta versión cubren intervalos, límites, combate, descanso, daño recibido, persistencia y precios en las cuatro dificultades. El cronómetro de Ranked sigue siendo una prueba local no verificada: la actualización de gatos no activa la competición oficial. La configuración de retorno de Auth y el servidor de simulación verificada siguen pendientes; no se sustituyen por una aceptación de puntuaciones del navegador.
 
-## Gatos dorados y acertijo · v87
+## Gatos dorados y acertijo · v88
 
 Los gatos tienen **42 de vida y 6 de daño**. La casa tiene **340 de vida base** y gana experiencia con las bajas de sus propios gatos. Mejora con **4, 9 y 16 bajas acumuladas**, con detalles dorados y estrellas. La primera mejora aumenta la vida de los gatos a **54**; la segunda aumenta su velocidad de **72 a 90**; la tercera permite **4 gatos vivos por casa**, manteniendo el máximo de tres casas. Las mejoras afectan a los compañeros existentes y a los nuevos. Los gatos tienen siluetas redondeadas más sencillas; mantienen las poses de caminar, atacar y dormir. Los guardados antiguos se adaptan una sola vez, conservando la proporción de vida.
 
@@ -198,3 +198,9 @@ Se mantienen los audios y los límites actuales de la beta de Rankeds. La confir
 La función `ranked-api` de Supabase controla sesiones y bloques; `supabase/sql/verified87.sql` contiene la migración interna. `.github/workflows/ranked-verify.yml` reproduce la cola con identidad OIDC, sin guardar claves administrativas en GitHub. `server/engines/manifest.json` fija el motor admitido. El frontend no requiere compilación para jugar. Para desarrollar los módulos: `npm ci`, `npm run build`, `npm test`.
 
 El correo de confirmación y recuperación debe estar configurado en Supabase Auth (Site URL: `https://neliux.github.io/Umbralia/`, mismo destino en Redirect URLs). El SMTP predeterminado de Supabase puede restringir destinatarios; el envío público requiere un proveedor de correo configurado. No se incluyen credenciales SMTP en este repositorio.
+
+## Parche v88
+
+El robot de Caos normal e infinito sigue combatiendo incluso por debajo del 25% de vida; vuelve a luchar inmediatamente si un guardado lo dejó en retirada. Conserva su daño, vida y reaparición. En campaña mantiene su comportamiento de mantenimiento y retirada. Las puertas abren sus hojas al acercarte y las cierran al alejarte, sin cambiar colisiones ni estadísticas.
+
+La nueva regla de robots se guarda en los metadatos del intento competitivo como `rules88`. El protocolo de reproducción sigue siendo `87-replay-v1`: el verificador conserva la lógica anterior cuando falta ese indicador, para aceptar intentos iniciados antes del parche. No se reinician la temporada, los récords ni los mundos.
