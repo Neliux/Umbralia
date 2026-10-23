@@ -1,7 +1,7 @@
 {
   "name": "umbralia",
-  "version": "93.0.0",
-  "description": "Juego de acción y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfréntate a jefes con mecánicas propias. Incluye campaña, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.",
+  "version": "94.0.0",
+  "description": "Juego de acci\u00f3n y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfr\u00e9ntate a jefes con mec\u00e1nicas propias. Incluye campa\u00f1a, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.",
   "directories": {
     "test": "tests"
   },
