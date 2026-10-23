@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Umbralia v92</title>
+  <title>Umbralia v93</title>
   <style>
     :root {
       --bg: #0d3242;
@@ -404,7 +404,7 @@
 
   <div id="mainMenu" class="screen">
     <div class="menu-card menu-card37">
-      <div class="menu-hero37"><div class="menu-art37"><span class="menu-ring37 ring-a37"></span><span class="menu-ring37 ring-b37"></span><span class="menu-orbit37 orbit-a37"></span><span class="menu-orbit37 orbit-b37"></span><button type="button" id="menuEye39" class="menu-eye37" aria-label="El ojo del umbral"><i></i></button></div><div><span class="menu-badge37">VERSIÓN 92 · CUENTAS Y RANKEDS BETA</span><p class="menu-kicker37">CONSTRUYE. EXPLORA. ELIGE TU TIEMPO.</p></div></div>
+      <div class="menu-hero37"><div class="menu-art37"><span class="menu-ring37 ring-a37"></span><span class="menu-ring37 ring-b37"></span><span class="menu-orbit37 orbit-a37"></span><span class="menu-orbit37 orbit-b37"></span><button type="button" id="menuEye39" class="menu-eye37" aria-label="El ojo del umbral"><i></i></button></div><div><span class="menu-badge37">VERSIÓN 93 · CUENTAS Y RANKEDS BETA</span><p class="menu-kicker37">CONSTRUYE. EXPLORA. ELIGE TU TIEMPO.</p></div></div>
       <h1 class="title"><button type="button" id="menuTitle39" class="menu-title39">Umbralia: Ecos del Tiempo</button></h1>
       <p class="subtitle">Explora una campaña llena de secretos o entra al Caos: una isla, tu arma favorita y un último desafío.</p>
       <div class="menu-worlds37" aria-label="Explorar los mundos de la campaña"><button class="world-chip37" data-world-preview="1" aria-pressed="true">1 · Isla</button><button class="world-chip37" data-world-preview="2" aria-pressed="false">2 · Nieve</button><button class="world-chip37" data-world-preview="3" aria-pressed="false">3 · Lava</button><button class="world-chip37" data-world-preview="4" aria-pressed="false">4 · Órbitas</button><button class="world-chip37" data-world-preview="5" aria-pressed="false">5 · Viento</button><button class="world-chip37" data-world-preview="6" aria-pressed="false">6 · Vacío</button></div><p id="menuSecret39" class="hidden menu-secret39" role="status" aria-live="polite"></p><p id="menu-preview37">Tu aventura comienza recolectando, construyendo y defendiendo tu isla.</p>
@@ -9812,7 +9812,7 @@ Object.assign(buildingDefs.magmaTower,{world3Only:false,hp:230,desc:'Torre de ma
 Object.assign(buildingDefs.windPurifier,{name:'Jardín purificador',desc:'Un jardín de apoyo para cualquier combate: radio 220, repara 18 a edificios, cura 5 al jugador y absorbe hasta 6 proyectiles cada 2,5 s. Elimina ralentización.'});
 weaponDefs.push({id:'chipa',name:'Chipa orbital',rarity:'uncommon',damage:12,cost:{wood:14,wheat:18,stone:8,coins:65},weight:'light',cooldown:.65,range:330,type:'chipa46',desc:'Toque: una chipa teje una órbita curva de ida y regreso, golpeando una vez por recorrido (12 + 12). Mantén 0,65 s para una corona de 16 chipas de 9 de daño. Descarga: 1,8 s de recarga.'});groups40.uncommon.push('chipa');game.unlockedWeapons.add('chipa');
 let chipaCharge46=null;
-function fireChipa46(radial=false){const p=game.player,a=weaponAimAngle(p,500);for(let i=0;i<(radial?16:1);i++){const q=a+i*TAU/16;game.projectiles.push({chipa46:true,special36:true,kind:'chipa46',owner:'player',x:p.x,y:p.y,ox46:p.x,oy46:p.y,a:q,age46:0,life:radial?1.25:1.2,r:9,damage:radial?10:11,radial46:radial,hits46:{}});}p.cooldowns.chipa=radial?1.4:.25;playSound('attack');}
+function fireChipa46(radial=false){const p=game.player,a=weaponAimAngle(p,500);for(let i=0;i<(radial?16:1);i++){const q=a+i*TAU/16;game.projectiles.push({chipa46:true,special36:true,kind:'chipa46',owner:'player',x:p.x,y:p.y,ox46:p.x,oy46:p.y,a:q,age46:0,life:radial?1.25:1.2,r:9,damage:rules93()?(radial?20:9):(radial?10:11),radial46:radial,hits46:{}});}p.cooldowns.chipa=radial?1.4:.25;playSound('attack');}
 const attack46=attack;attack=function(){if(game.player.weapon!=='chipa')return attack46();if(game.openWindow||game.over||game.buildMode||game.sellMode||targeting40||game.ultiMotion40||game.gate36||game.voidVictory||game.player.stunned>0||(game.player.cooldowns.chipa||0)>0||chipaCharge46)return;if(wantsFire45())chipaCharge46={age:0};else fireChipa46();};
 function releaseChipa46(cancel=false){if(!chipaCharge46)return;chipaCharge46=null;if(!cancel&&!game.over&&!game.openWindow&&game.player.weapon==='chipa')fireChipa46();}
 for(const s of [canvas,attackButton35]){s.addEventListener('pointerup',()=>releaseChipa46());s.addEventListener('pointercancel',()=>releaseChipa46(true));}window.addEventListener('keyup',e=>{if(editing49(e.target)||editing49(document.activeElement)){clearInput49();return;}if(e.code==='Space')releaseChipa46();});window.addEventListener('blur',()=>releaseChipa46(true));
@@ -11520,7 +11520,7 @@ enemyDefs.bomb90={name:'Bomba corredora',hp:40,speed:0,damage:0,coins:8,color:'#
 function bombCampaign90(){return rules90()&&!game.chaos47&&!game.lost74&&isMasochistMode()&&game.world<=6;}
 const enemySpawn90=spawnEnemy;
 spawnEnemy=function(type,...a){const n=game.enemies.length,r=enemySpawn90(type,...a);if(type==='bomb90'&&game.enemies.length>n){const e=game.enemies.at(-1);Object.assign(e,{hp:40,maxHp:40,r:27,boss:false,bombAge90:0,bombLegs90:false,freeze:0,slow:0});}return r;};
-function spawnWaveBomb90(){if(!bombCampaign90()||!game.wave.active||game.wave.bomb90||game.voidBossSpawnDelay>0||game.enemies.some(boss45))return;game.wave.bomb90=true;const a=angleTo(0,0,game.player.x,game.player.y)+Math.PI*.75,r=Math.max(180,islandRadius()-65);spawnEnemy('bomb90',Math.cos(a)*r,Math.sin(a)*r);}
+function spawnWaveBomb90(){if((rules93()&&game.wave.number<4)||!bombCampaign90()||!game.wave.active||game.wave.bomb90||game.voidBossSpawnDelay>0||game.enemies.some(e=>rules93()?['finalBoss','snowArchitect','lavaKitsune','orbitConductor','stormHeart'].includes(e.type):boss45(e)))return;game.wave.bomb90=true;const a=angleTo(0,0,game.player.x,game.player.y)+Math.PI*.75,r=Math.max(180,islandRadius()-65);spawnEnemy('bomb90',Math.cos(a)*r,Math.sin(a)*r);}
 const sanctuary90=sanctuaryWave71;
 sanctuaryWave71=function(...a){game.wave.bomb90=false;const r=sanctuary90(...a);spawnWaveBomb90();return r;};
 // The other worlds reuse the wave object: clear the per-wave spawn marker before launching.
@@ -11537,7 +11537,7 @@ function detonateBomb90(e){
 function stepBomb90(e,dt){
  if(e.hit>0)e.hit=Math.max(0,e.hit-dt);
  e.bombAge90=(e.bombAge90||0)+dt;
- if(!e.bombLegs90&&e.bombAge90+1e-8>=4){e.bombLegs90=true;e.hp=e.maxHp=100;e.freeze=0;cue37('¡LA BOMBA TIENE PATAS!');}
+ if(!e.bombLegs90&&e.bombAge90+1e-8>=(rules93()?bombDelay93(e):4)){e.bombLegs90=true;e.hp=e.maxHp=100;e.freeze=0;cue37('¡LA BOMBA TIENE PATAS!');}
  if(e.poison>0){e.poison-=dt;e.poisonTick=(e.poisonTick||0)-dt;if(e.poisonTick<=0){e.poisonTick=.55;damageEnemy(e,3,'poisonTick');}}
  if(e.hp<=0||!e.bombLegs90)return;
  if(e.freeze>0){e.freeze=Math.max(0,e.freeze-dt);return;}
@@ -11556,7 +11556,7 @@ function drawBomb90(e){
  if(e.bombLegs90){ctx.strokeStyle='#b6a6b5';ctx.lineWidth=6;const t=game.settings.reducedMotion46?0:Math.sin(game.time*24)*9;for(const s of [-1,1]){ctx.beginPath();ctx.moveTo(s*15,16);ctx.lineTo(s*(27+t*.4),33);ctx.lineTo(s*(36-t),39);ctx.stroke();}}
  ctx.fillStyle=e.hit>0?'#fff1d3':'#333143';ctx.strokeStyle='#ec8698';ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,27,0,TAU);ctx.fill();ctx.stroke();
  ctx.strokeStyle='#d9b16c';ctx.beginPath();ctx.moveTo(0,-27);ctx.quadraticCurveTo(2,-42,15,-37);ctx.stroke();ctx.fillStyle='#ffd591';ctx.beginPath();ctx.arc(15,-37,4,0,TAU);ctx.fill();
- ctx.fillStyle='#ffbdba';ctx.textAlign='center';ctx.font='bold 17px sans-serif';ctx.fillText(e.bombLegs90?'!':Math.max(1,Math.ceil(4-e.bombAge90)),0,6);drawMiniHp(0,-52,e.hp/e.maxHp,58);ctx.restore();
+ ctx.fillStyle='#ffbdba';ctx.textAlign='center';ctx.font='bold 17px sans-serif';ctx.fillText(e.bombLegs90?'!':Math.max(1,Math.ceil((rules93()?bombDelay93(e):4)-e.bombAge90)),0,6);drawMiniHp(0,-52,e.hp/e.maxHp,58);ctx.restore();
 }
 const enemiesDraw90=drawEnemies;
 drawEnemies=function(){const all=game.enemies,own=all.filter(e=>e.type==='bomb90'||(voidCampaign90()&&e.coreBoss90));if(!own.length)return enemiesDraw90();game.enemies=all.filter(e=>!own.includes(e));try{enemiesDraw90();}finally{game.enemies=all;}for(const e of own)if(e.hp>0){if(e.type==='bomb90')drawBomb90(e);else drawLivingCore90(e.x,e.y,e.r,null,e.hit>0);}};
@@ -11654,7 +11654,7 @@ function deviceLines92(){
  return lines;
 }
 const redStep92=errorStep45;
-errorStep45=function(e,dt){const result=redStep92(e,dt);if(e.hp<=0||game.over)return result;e.talkClock92=(e.talkClock92??4)-dt;if(e.talkClock92<=0){e.talkClock92=10;const lines=deviceLines92(),index=(e.talkIndex92||0)%lines.length;e.talkIndex92=(e.talkIndex92||0)+1;redTalk92.textContent=lines[index];redTalk92.classList.remove('hidden');redTalkLeft92=6;}return result;};
+errorStep45=function(e,dt){const result=redStep92(e,dt);if(e.hp<=0||game.over)return result;e.talkClock92=(e.talkClock92??4)-dt;if(e.talkClock92<=0){e.talkClock92=10;const lines=deviceLines92(),index=(e.talkIndex92||0)%lines.length;e.talkIndex92=(e.talkIndex92||0)+1;if(rules93())redSay93(lines[index]);else{redTalk92.textContent=lines[index];redTalk92.classList.remove('hidden');redTalkLeft92=6;}}return result;};
 function redDeform92(e){return clamp((1-clamp(e.hp/e.maxHp,0,1))*.8+Math.min(.2,(e.age45||0)/300),0,1);}
 const redFace92=drawRedBall91;
 drawRedBall91=function(e){
@@ -11754,7 +11754,7 @@ drawEffects=function(){effectsPowers92();const c=game.chaos47;if(!c||!rules92())
 };
 const updateFeatures92=update;
 update=function(dt){
- if(redTalkLeft92>0&&!document.hidden){redTalkLeft92-=dt;if(redTalkLeft92<=0)redTalk92.classList.add('hidden');}
+ if(!rules93()&&redTalkLeft92>0&&!document.hidden){redTalkLeft92-=dt;if(redTalkLeft92<=0)redTalk92.classList.add('hidden');}
  if(!game.enemies.some(e=>e.type==='errorBall45'&&e.hp>0)||game.screen!=='game'||game.over)redTalk92.classList.add('hidden');
  if(bossScene92())return stepBossScene92(dt);
  return updateFeatures92(dt);
@@ -11762,6 +11762,107 @@ update=function(dt){
 const loadFeatures92=continueWorld38;
 continueWorld38=function(...a){redTalk92.textContent='';redTalk92.classList.add('hidden');const ok=loadFeatures92(...a);if(ok&&rules92()&&game.chaos47){normalizePowers92();const c=game.chaos47,s=c.defeat92;if(s){c.active=game.wave.active=true;c.wave=s.wave;c.pending=false;c.boss=s.boss.type;clearSceneThreats92();game.openWindow='bossScene92';s.camera={...game.camera};}else if(c.pending){c.choices=c.choices.filter(id=>{const p=powerDefs47.find(p=>p.id===id);return p&&eligiblePower50(p);});if(!c.choices.length)c.choices=powerOptions47();renderPanel();}}return ok;};document.getElementById('continueWorld38').onclick=continueWorld38;
 const styleFeatures92=document.createElement('style');styleFeatures92.textContent='#redTalk92{position:fixed;z-index:100;left:50%;bottom:26%;transform:translateX(-50%);width:min(660px,88vw);padding:13px 17px;border:1px solid #da7889;border-radius:11px;background:#210d1ff0;color:#ffd2cf;text-align:center;font-size:clamp(13px,2.8vw,18px);line-height:1.5;overflow-wrap:anywhere;pointer-events:none;box-shadow:0 0 25px #a5223f33}#redTalk92.hidden{display:none!important}';document.head.appendChild(styleFeatures92);
+
+// v93 · Terminal defeat, one Red Ball dialogue, combat balance and destructible boss arenas.
+function rules93(){return !clock87.active||clock87.meta?.rules93===true;}
+const defeatKey93='umbralia.defeated.v93';let defeats93={runs:[],modes:{}};
+try{const d=JSON.parse(localStorage.getItem(defeatKey93)||'null');if(d&&Array.isArray(d.runs)&&d.modes&&typeof d.modes==='object')defeats93=d;}catch{}
+const lostRunIds93=new Set(defeats93.runs);let leaveDefeat93=false;
+const lossPanels93=new Set(['gameover','chaosLoss47','secretLoss45','lostDefeat74']);
+function retryVoid93(){return !game.chaos47&&!game.lost74&&game.world===6&&!game.voidVictory&&game.enemies.some(e=>e.hp>0&&epic37(e));}
+function terminalLoss93(){return !retryVoid93()&&!game.voidVictory&&!!(game.over||game.chaos47?.dead||game.secretDefeated46||game.lost74?.phase==='defeat');}
+function rootSave93(key){return String(key||saveKey38).replace(/\.(pending80|backup80|previous80)$/,'');}
+function markLoss93(){
+ if(!terminalLoss93()||!game.runId80)return;
+ const id=game.runId80,key=game.chaos47?activeChaosKey81():saveKey38;
+ if(lostRunIds93.has(id))return;lostRunIds93.add(id);defeats93.modes[key]=id;defeats93.runs=[...lostRunIds93];
+ try{localStorage.setItem(defeatKey93,JSON.stringify(defeats93));}catch{}
+ refreshContinue38();refreshChaos47();
+}
+const decodeDefeat93=safeDecode80;
+safeDecode80=function(raw,key){const d=decodeDefeat93(raw,key);if(!d)return null;const s=d.state;if(lostRunIds93.has(s.runId80)||s.over||s.player.hp<=0||s.chaos47?.dead||s.secretDefeated46||s.lost74?.phase==='defeat')return null;return d;};
+const findDefeat93=findSave80;
+findSave80=function(key){const base=rootSave93(key),id=defeats93.modes[base];if(id){try{const raw=localStorage.getItem(base),s=raw?JSON.parse(raw)?.state:null;if(!s||s.runId80===id)return null;}catch{return null;}}return findDefeat93(key);};
+const openDefeat93=openWindow;
+openWindow=function(name){
+ if(lossPanels93.has(name))markLoss93();
+ if(!leaveDefeat93&&game.started&&game.screen==='game'&&terminalLoss93()&&!lossPanels93.has(name))return;
+ return openDefeat93(name);
+};
+const closeDefeat93=closeWindow;
+closeWindow=function(...a){if(!leaveDefeat93&&game.started&&game.screen==='game'&&game.over&&(lossPanels93.has(game.openWindow)||game.openWindow==='voidRetry37'))return false;return closeDefeat93(...a);};
+const deathDefeat93=respawnPlayer;
+respawnPlayer=function(...a){if(retryVoid93()){game.player.hp=0;game.over=true;clearInput49();release35();openWindow('voidRetry37');return;}const r=deathDefeat93(...a);markLoss93();return r;};
+const coreDefeat93=damageCore;
+damageCore=function(...a){const r=coreDefeat93(...a);markLoss93();return r;};
+const panelDefeat93=panelHtml;
+panelHtml=function(name){let h=panelDefeat93(name);if(lossPanels93.has(name)||name==='voidRetry37'){h=h.replace(/<button\b[^>]*\bdata-close\b[^>]*>[\s\S]*?<\/button>/g,'');if(name==='secretLoss45')h=h.replace(/<button\b[^>]*\bdata-error-retry45\b[^>]*>[\s\S]*?<\/button>/g,'').replace('Puedes descansar o intentarlo de nuevo, chaval.','Esta aventura terminó, chaval. Puedes volver al menú y empezar una nueva.');if(name==='lostDefeat74')h=h.replace(/<button\b[^>]*\bdata-lost-retry74\b[^>]*>[\s\S]*?<\/button>/g,'');}if(name==='instructions')h=h.replace('En Masoquista aparece una bomba de 40 de vida en cada defensa: a los 4 s','Desde la oleada 4 de Masoquista aparece una bomba de 40 de vida: entre 6 y 8 s después');return h;};
+const wireDefeat93=wirePanel;
+wirePanel=function(panel){wireDefeat93(panel);if(!game.over)return;panel.querySelectorAll('[data-menu],[data-restart],[data-chaos-again47],[data-lost-exit74],[data-void-retry37],[data-chaos-start47],[data-difficulty49],[data-variant81]').forEach(b=>{const fn=b.onclick;b.onclick=function(...a){leaveDefeat93=true;try{return fn?.apply(this,a);}finally{leaveDefeat93=false;}};});};
+const loadDefeat93=continueWorld38;
+continueWorld38=function(...a){markLoss93();if(game.started&&game.screen==='game'&&terminalLoss93()){showToast('Esta partida terminó. Vuelve al menú para empezar una nueva.',2200);return false;}const r=loadDefeat93(...a);applyBalance93();if(r&&rules93()){for(const p of game.projectiles)if(p.return42&&p.weapon42==='boomerang')p.damage=22;for(const e of game.enemies)if(e.type==='bomb90'&&!Number.isFinite(e.bombFuse93))e.bombFuse93=7;}return r;};document.getElementById('continueWorld38').onclick=continueWorld38;
+
+// All Red Ball lines, including contextual browser/account lines, share this one transient DOM box.
+let redQueue93=[];
+function redEncounter93(){return game.started&&game.screen==='game'&&!game.over&&((game.world===7&&game.secret45?.boss&&!game.secret45?.won)||(game.chaos47?.active&&game.chaos47.boss==='errorBall45'&&!game.chaos47.won));}
+function redSay93(message){if(!message)return;const text=String(message);if(text===redTalk92.textContent&&redTalkLeft92>0)return;if(redTalkLeft92>0&&!redTalk92.classList.contains('hidden')){if(!redQueue93.includes(text)){redQueue93.push(text);if(redQueue93.length>4)redQueue93.shift();}return;}redTalk92.textContent=text;redTalk92.classList.remove('hidden');redTalkLeft92=text.includes('@')?5:3.2;glitchText45.style.display='none';}
+const cueDialogue93=cue37;
+cue37=function(message){if(rules93()&&redEncounter93()){redSay93(message);return;}return cueDialogue93(message);};
+function stepDialogue93(dt){if(!rules93())return;if(!redEncounter93()){redQueue93=[];return;}glitchText45.style.display='none';if(!game.openWindow&&!document.hidden)redTalkLeft92=Math.max(0,redTalkLeft92-dt);if(redTalkLeft92<=0){redTalk92.classList.add('hidden');if(redQueue93.length)redSay93(redQueue93.shift());}}
+
+// Values are swapped back when an official replay starts, so its pinned rules still match.
+const balanceBase93=new Map(['flamethrower','chipa','beyblade','boomerang'].map(id=>[id,{damage:weapon48(id).damage,cooldown:weapon48(id).cooldown,desc:weapon48(id).desc}]));let balanceMode93=null;
+function applyBalance93(){const local=rules93();if(balanceMode93===local)return;balanceMode93=local;for(const [id,w]of balanceBase93)Object.assign(weapon48(id),w);if(!local)return;
+ Object.assign(weapon48('flamethrower'),{damage:46,cooldown:2.1,desc:'46 de daño/s de contacto. Alcance 145. Recámara de 3,35 s, recarga de 2,1 s; cada paquete de tres recámaras consume 2 de trigo.'});
+ Object.assign(weapon48('chipa'),{damage:9,desc:'9 de daño de ida y 9 de regreso. Recarga 0,25 s. Mantén 0,65 s: corona de 16 chipas, 20 de daño cada una y recarga de 1,4 s.'});
+ Object.assign(weapon48('beyblade'),{damage:8,desc:'Giro de 8 de daño por pulso, radio cercano y empuje. Recarga '+weapon48('beyblade').cooldown+' s.'});
+ Object.assign(weapon48('boomerang'),{damage:22,desc:'22 de daño de ida y de vuelta. Velocidad 702 al salir y 1053 al regresar. Vuelve a lanzarlo al recuperarlo; uno en vuelo.'});
+}
+const resetBalance93=resetRun;
+resetRun=function(...a){const r=resetBalance93(...a);applyBalance93();redQueue93=[];redTalk92.classList.add('hidden');return r;};
+const statsBalance93=weaponStat67;
+weaponStat67=function(w){if(rules93()){if(w.id==='beyblade')return '8 por pulso · '+w.cooldown+' s';if(w.id==='chipa')return '9 por impacto · Carga: 16 × 20';}return statsBalance93(w);};
+
+// Mutant resources keep their drop chance, but summon a genuine roaming mutant miniboss.
+enemyDefs.mutantBrute93={name:'Coloso mutante',hp:360,damage:20,speed:46,color:'#81b65d',coins:45,boss:true};let collectingMutant93=false;
+const collectMutant93=collectResource;
+collectResource=function(node){const old=collectingMutant93;collectingMutant93=rules93()&&node?.type==='mutant'&&!node.frozen&&game.resources.includes(node);try{return collectMutant93(node);}finally{collectingMutant93=old;}};
+const hitMutant93=damagePlayer;
+damagePlayer=function(n,...a){return hitMutant93(collectingMutant93&&n===7?14:n,...a);};
+function bombDelay93(e){return Number.isFinite(e.bombFuse93)?clamp(e.bombFuse93,6,8):7;}
+const spawnBalance93=spawnEnemy;
+spawnEnemy=function(type,x=null,y=null,mutant=false){if(collectingMutant93&&mutant&&type==='raider')type='mutantBrute93';const before=new Set(game.enemies),r=spawnBalance93(type,x,y,mutant);if(!rules93())return r;for(const e of game.enemies)if(!before.has(e)){if(e.type==='bomb90')e.bombFuse93=rnd(6,8);if(e.type==='mutantBrute93'){const hp=isMasochistMode()?450:isEasyMode()?280:360;Object.assign(e,{hp,maxHp:hp,maso45HP:hp,boss:true,mutant:true,mini93:true,r:30,damage:20,speed:46});}}return r;};
+
+// Earlier, predictable elite arrivals; true boss rounds retain their dedicated encounters.
+const eliteOrder93=['angel','golem','dragon','phoenix','elder','mamut'];
+function campaignElites93(){if(!rules93()||game.chaos47||game.lost74||game.over||!game.wave.active||game.world>=6||game.enemies.some(e=>['finalBoss','snowArchitect','lavaKitsune','orbitConductor','stormHeart'].includes(e.type)))return;const n=game.wave.number,mode=difficultyKey(),period=mode==='masochist'||mode==='hardcore'?2:mode==='easy'?4:3,start=mode==='easy'?8:4;if(n<start||(n-start)%period)return;const stamp=game.world+':'+n;if(game.wave.elite93===stamp)return;game.wave.elite93=stamp;const count=mode==='masochist'&&n>=10?2:1;for(let i=0;i<count;i++){const type=eliteOrder93[(Math.floor((n-start)/period)+i)%eliteOrder93.length];spawnEnemy(type);const e=game.enemies.at(-1);if(e?.type===type){e.mini93=true;e.roaming93=true;}}}
+const campaignStart93=startWave;
+startWave=function(...a){const r=campaignStart93(...a);campaignElites93();return r;};
+const sanctuaryStart93=sanctuaryWave71;
+sanctuaryWave71=function(...a){const r=sanctuaryStart93(...a);campaignElites93();return r;};
+const chaosStart93=startChaosWave47;
+startChaosWave47=function(...a){const was=game.chaos47?.active,r=chaosStart93(...a),c=game.chaos47;if(rules93()&&c&&!was&&c.active&&c.wave>=4&&c.wave%3!==0){const count=isMasochistMode()?(c.wave>=10?3:2):1;for(let i=0;i<count;i++)if(c.queue.length){const type=eliteOrder93[(Math.floor(c.wave/2)-2+i+eliteOrder93.length)%eliteOrder93.length];c.queue[i]=type;}}return r;};
+
+// Boss area attacks and projectiles also collide with ordinary buildings, once per attack.
+function siegeBoss93(e){return e&&e.hp>0&&['snowArchitect','lavaKitsune','orbitConductor','stormHeart','finalBoss'].includes(e.type)&&game.world>=2&&game.world<=6&&!game.chaos47;}
+function siegeSource93(h){const type=h?.siegeType93||sourceType72(h);return rules93()&&!game.chaos47&&game.world>=2&&game.world<=6&&['snowArchitect','lavaKitsune','orbitConductor','stormHeart','finalBoss'].includes(type);}
+function siegeBuildings93(){return game.buildings.filter(b=>b.hp>0&&!b.corpse63&&!isCat85(b)&&!['trap','deco'].includes(b.type));}
+const hazardSiege93=hazard35;
+hazard35=function(h){if(rules93()&&!game.chaos47){const e=siegeBoss93(source72)?source72:game.enemies.find(siegeBoss93);if(e)h={...h,siegeType93:e.type,siegeId93:e.id};}return hazardSiege93(h);};
+function inHazard93(h,b){const r=b.r||22,dx=b.x-h.x,dy=b.y-h.y;if(h.kind==='line')return segmentDistance36(b.x,b.y,h.x,h.y,h.x+Math.cos(h.a)*h.len,h.y+Math.sin(h.a)*h.len)<(h.width||24)/2+r;if(h.kind==='ring')return Math.abs(Math.hypot(dx,dy)-h.r)<(h.width||24)/2+r;return Math.hypot(dx,dy)<(h.r||30)+r;}
+function siegeHazards93(before,ages){for(const h of new Set([...before,...(game.hazards35||[])])){if(!siegeSource93(h)||!(h.damage>0)||h.age<(h.delay||0)||(ages.get(h)??0)>(h.delay||0)+(h.duration||.45))continue;h.structureHits93=h.structureHits93||{};for(const b of siegeBuildings93()){const id=b.id||b.type+':'+b.x+':'+b.y;if(!h.structureHits93[id]&&inHazard93(h,b)){h.structureHits93[id]=true;damageBuilding(b,h.damage,{type:h.siegeType93||sourceType72(h),boss:true});}}}}
+const enemySiege93=updateEnemies;
+updateEnemies=function(dt){const before=[...(game.hazards35||[])],ages=new Map(before.map(h=>[h,h.age]));const r=enemySiege93(dt);if(!rules93()||game.over||game.openWindow||bossScene92())return r;siegeHazards93(before,ages);for(const e of game.enemies.filter(siegeBoss93)){if(e.freeze>0||e.dizzy41>0)continue;e.siegeContact93=Math.max(0,(e.siegeContact93||0)-dt);if(e.siegeContact93<=0){const near=siegeBuildings93().filter(b=>dist(e.x,e.y,b.x,b.y)<(e.r||40)+30);if(near.length){for(const b of near)damageBuilding(b,14,e);e.siegeContact93=1;}}e.siegeClock93=(e.siegeClock93??4)-dt;if(e.siegeClock93<=0){e.siegeClock93=6;const b=siegeBuildings93().sort((a,b)=>dist(e.x,e.y,a.x,a.y)-dist(e.x,e.y,b.x,b.y))[0];if(b)withSource72(e,()=>circle35(b.x,b.y,58,.95,'#f2a47e',22));}}return r;};
+const bulletSiege93=bulletTarget63;
+bulletTarget63=function(p,dt){const first=bulletSiege93(p,dt);if(!siegeSource93(p))return first;const ox=p.x-(p.vx||0)*dt,oy=p.y-(p.vy||0)*dt,candidates=siegeBuildings93().filter(b=>segmentDistance36(b.x,b.y,ox,oy,p.x,p.y)<(b.r||22)+(p.r||5)+4).map(ref=>({kind:'building',ref,x:ref.x,y:ref.y,r:ref.r||22}));if(first)candidates.push(first);candidates.sort((a,b)=>dist(ox,oy,a.x,a.y)-dist(ox,oy,b.x,b.y));return candidates[0]||null;};
+const mutantDraw93=drawEnemies;
+drawEnemies=function(){const own=game.enemies.filter(e=>e.type==='mutantBrute93'&&e.hp>0),all=game.enemies;if(!own.length)return mutantDraw93();game.enemies=all.filter(e=>e.type!=='mutantBrute93');try{mutantDraw93();}finally{game.enemies=all;}for(const e of own){if(!visible57(e,90))continue;ctx.save();ctx.translate(e.x,e.y);ctx.fillStyle=e.hit>0?'#e9f6bb':'#56874e';ctx.strokeStyle='#243e37';ctx.lineWidth=3;ctx.beginPath();for(let i=0;i<10;i++){const a=i*TAU/10,r=i%2?27:35;const x=Math.cos(a)*r,y=Math.sin(a)*r;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#c6f17f';for(const x of [-10,10]){ctx.beginPath();ctx.arc(x,-5,5,0,TAU);ctx.fill();}ctx.strokeStyle='#c6f17f';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-8,12);ctx.lineTo(0,6);ctx.lineTo(8,14);ctx.stroke();drawMiniHp(0,-48,e.hp/e.maxHp,70);ctx.restore();}};
+const updateTerminal93=update;
+update=function(dt){applyBalance93();markLoss93();if(game.started&&game.screen==='game'&&game.over&&!game.openWindow){openWindow(retryVoid93()?'voidRetry37':game.chaos47?'chaosLoss47':game.world===7?'secretLoss45':'gameover');}stepDialogue93(dt);return updateTerminal93(dt);};
+const renderBalance93=render;
+render=function(){applyBalance93();const r=renderBalance93();if(rules93()&&redEncounter93())glitchText45.style.display='none';return r;};
+const cssUnified93=document.createElement('style');cssUnified93.textContent='#redTalk92{top:calc(var(--hud-bottom62,90px) + 14px);bottom:auto;max-height:28vh;overflow:hidden;font-size:clamp(13px,2.7vw,17px)}';document.head.appendChild(cssUnified93);
+applyBalance93();
 
 
 refreshContinue38();refreshChaos47();

@@ -1,4 +1,4 @@
-# Umbralia: Ecos del Tiempo · v92
+# Umbralia: Ecos del Tiempo · v93
 
 Juego de acción y supervivencia para navegador: explora siete mundos, construye defensas, combina armas y mejoras y enfréntate a jefes con mecánicas propias. Incluye campaña, Caos normal, Caos infinito y el duelo contra **Tu otro yo**. Para computadora y celular.
 
@@ -7,9 +7,20 @@ Juego de acción y supervivencia para navegador: explora siete mundos, construye
 1. Descomprime el ZIP y sube **su contenido** a la raíz del repositorio: `index.html`, `config.js`, `.nojekyll`, `README.md` y la carpeta completa `assets`.
 2. Reemplaza los archivos anteriores, incluida la música. Conserva la dirección del juego y los datos del navegador para mantener tus partidas y trofeos. Antes de actualizar, exporta tus partidas como precaución.
 3. En **Settings → Pages → Deploy from a branch**, elige **main** y **/(root)** y guarda. Abre el enlace cuando termine el despliegue.
-4. El título y la insignia del menú deben mostrar **v92**. Si ves otra versión, recarga sin caché.
+4. El título y la insignia del menú deben mostrar **v93**. Si ves otra versión, recarga sin caché.
 
 No necesita instalación ni compilación. El motor está en `index.html` y los módulos de cuentas y clasificación están en `assets/ranked/`. Prueba local: `python3 -m http.server 8000` y abre `http://localhost:8000`.
+
+## Cambios de v93
+
+- Las derrotas definitivas bloquean la X, Escape y la restauración de la misma partida desde Continuar, respaldos o importaciones. El jefe del sexto mundo conserva su reintento explícito, incluso en Masoquista.
+- Una sola barra para todos los diálogos de la Pelota Roja, incluidos los comentarios del navegador y de la cuenta.
+- Lanzallamas: 46 daño/s y recarga 2,1 s. Chipa: 9 de ida y regreso; cargada, 16 chipas de 20. Beyblade: 8 por pulso. Bumerán: 22 de ida y regreso.
+- Mineral mutante: daño base 14; su probabilidad de aparición de enemigo sigue en 22%, pero ahora invoca un Coloso mutante de 360 de vida base y 20 de daño.
+- Bomba Masoquista desde la oleada 4; tarda entre 6 y 8 segundos en desarrollar patas.
+- Minijefes desde la oleada 4: campaña Normal cada 3 oleadas; Hardcore/Masoquista cada 2. Caos añade élites a sus oleadas normales desde la cuarta, más numerosos en Masoquista.
+- Los jefes de mundos 2 a 6 dañan estructuras mediante contacto, proyectiles y áreas anunciadas; también apuntan ataques contra defensas.
+- Los cambios de balance se aplican a las reglas locales; las partidas competitivas conservan las estadísticas de su verificador.
 
 ## Cambios de v92
 
