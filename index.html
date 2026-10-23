@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Umbralia v95</title>
+  <title>Umbralia v96</title>
   <style>
     :root {
       --bg: #0d3242;
@@ -11927,6 +11927,47 @@ const error95=errorStep45;errorStep45=function(e,dt){const r=rules95()?withSourc
 const meteorDraw95=drawEffects;drawEffects=function(){meteorDraw95();if(!rules95()||game.world!==7||game.over)return;for(const e of game.enemies)for(const m of e.meteors95||[]){const u=clamp(m.age/m.delay,0,1);ctx.save();ctx.translate(m.x,m.y);ctx.strokeStyle='#ffb190';ctx.fillStyle='#f4646228';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,m.r,0,TAU);ctx.fill();ctx.stroke();ctx.beginPath();ctx.arc(0,0,m.r*(1-u),0,TAU);ctx.stroke();ctx.fillStyle='#ffe1a1';ctx.beginPath();ctx.ellipse(-70*(1-u),-240*(1-u),7+u*5,12+u*6,-.3,0,TAU);ctx.fill();ctx.strokeStyle='#ff7869';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(-70*(1-u),-240*(1-u));ctx.lineTo(-100*(1-u),-300*(1-u));ctx.stroke();ctx.restore();}};
 const onionModel95=drawBuildings;drawBuildings=function(){const all=game.buildings,own=rules95()?all.filter(b=>b.type==='onionTower94'):[];game.buildings=all.filter(b=>!own.includes(b));try{onionModel95();}finally{game.buildings=all;}for(const b of own){if(!visible57(b,110))continue;const lvl=Math.min(3,b.xpLevel||0),gold=lvl?'#e5c16d':'#859580';ctx.save();ctx.translate(b.x,b.y);ctx.strokeStyle='#283d40';ctx.lineWidth=3;ctx.fillStyle='#40564e';roundRect(-22,7,44,19,5);ctx.fill();ctx.stroke();ctx.strokeStyle=lvl?'#caa04f':'#586d60';ctx.lineWidth=5;for(const x of [-16,16]){ctx.beginPath();ctx.moveTo(0,7);ctx.lineTo(x,24);ctx.stroke();}ctx.save();ctx.rotate(b.aim94??-Math.PI/2);ctx.fillStyle='#536d5a';roundRect(-20,-11,43,22,5);ctx.fill();ctx.fillStyle=gold;roundRect(7,-4,66,8,2);ctx.fill();ctx.fillStyle='#243c3e';roundRect(66,-6,12,12,2);ctx.fill();ctx.fillStyle='#2e4646';roundRect(-8,-19,29,9,3);ctx.fill();ctx.fillStyle=lvl>=2?'#f9df96':'#a0c8b0';ctx.beginPath();ctx.arc(21,-14.5,4,0,TAU);ctx.fill();ctx.fillStyle='#dfc58c';ctx.beginPath();ctx.ellipse(-19,0,9,11,0,0,TAU);ctx.fill();ctx.strokeStyle='#91bb78';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-22,-6);ctx.lineTo(-27,-16);ctx.stroke();if(lvl){ctx.strokeStyle=gold;ctx.lineWidth=2;roundRect(-21,-12,45,24,5);ctx.stroke();for(let i=0;i<lvl;i++)ctx.fillRect(30+i*10,-6,3,12);if(lvl===3){ctx.strokeStyle='#fff0b2';ctx.beginPath();ctx.moveTo(-7,-3);ctx.lineTo(3,0);ctx.lineTo(-7,3);ctx.stroke();}}ctx.restore();ctx.fillStyle='#ffe1a2';ctx.font='bold 12px sans-serif';ctx.textAlign='center';ctx.fillText('★'.repeat(lvl),0,-31);drawMiniHp(0,-43,b.hp/b.maxHp,52);ctx.restore();}};
 const update95=update;update=function(dt){balance95();return update95(dt);};balance95();
+
+// v96 · Fragile onion sniper and clear construction progression cards.
+function rules96(){return !clock87.active||clock87.meta?.rules96===true;}
+const descBase96=Object.fromEntries(Object.entries(buildingDefs).map(([id,d])=>[id,d.desc]));let descMode96=null;
+function number96(n){return Number(n.toFixed(2)).toString().replace('.',',');}
+function structureDescriptions96(){
+ const unique='Nivel único: no gana estrellas ni tiene mejoras por nivel.',hp='Cada estrella aumenta la vida máxima un 10% y añade detalles dorados.',tiers=(id,base,levels)=>base+'\n'+levels.map((s,i)=>'★'.repeat(i+1)+' · '+s).join('\n')+'\n'+hp+' Mejora con '+turretXpThresholds(id).join(', ')+' bajas propias acumuladas.';
+ const descriptions={
+ wallStone:'Bloquea el paso de enemigos y protege las construcciones situadas detrás. '+buildingDefs.wallStone.hp+' de vida base.\n'+unique,
+ wallIron:'Muralla reforzada para resistir más golpes que la de piedra. '+buildingDefs.wallIron.hp+' de vida base.\n'+unique,
+ wallDiamond:'La muralla de mayor resistencia: '+buildingDefs.wallDiamond.hp+' de vida base. Bloquea enemigos.\n'+unique,
+ gate:'Permite pasar al jugador y frena a los enemigos. Se abre al acercarte; al ser destruida empuja a los enemigos cercanos.\n'+unique,
+ trap:'Bomba de un solo uso: explota al pisarla un enemigo, causa 90 de daño en radio 68,2 y desaparece. No recibe daño de ataques.\n'+unique,
+ medicalTower:'Cura 6 de vida al jugador cada 0,9 s dentro de radio 140. También cura las plantas aliadas cercanas.\n'+unique,
+ speedShrine:'Aumenta un 35% la velocidad del jugador mientras permanece dentro de radio 270.\n'+unique,
+ warTotem:'Aumenta un 20% el daño del jugador dentro de radio 160.\n'+unique,
+ tradeShop:'Interactúa para abrir intercambios de recursos; cada oferta muestra lo que pagas y recibes.\n'+unique,
+ helper:'Robot que combate, recolecta y repara estructuras permitidas. Interactúa para elegir sus órdenes. Reparar consume piedra y hierro; el coste aumenta en Hardcore. Si queda averiado, puedes reconstruirlo.\n'+unique,
+ deco:'Decoración de la isla, sin ataques, producción ni apoyo de combate.\n'+unique,
+ windPurifier:'Jardín de apoyo en radio 220: cada 1,25 s repara 26 a estructuras, cura 2 al jugador y absorbe hasta 6 proyectiles enemigos. Elimina ralentización. Si un enemigo lo destruye, explota por 35 de daño en radio 130.\n'+unique,
+ tower:tiers('tower','Dispara automáticamente: 11 de daño, alcance 235 y un disparo cada 0,75 s.',['Más daño y alcance; dispara cada 0,62 s.','Más daño y alcance; dispara cada 0,5 s.','Más daño y alcance; los impactos también ralentizan.']),
+ mgTower:tiers('mgTower','Torre blindada de disparo rápido: 5 de daño, alcance 295 y un disparo cada 0,18 s.',['Más daño y alcance; dispara cada 0,13 s.','Más daño y alcance; dispara cada 0,1 s.','Más daño y alcance; añade veneno a los proyectiles.']),
+ iceTower:tiers('iceTower','Dispara hielo: 26 de daño, alcance 270 y recarga de 1 s. Ralentiza y empuja enemigos livianos; los jefes conservan resistencias.',['Más daño y alcance; recarga de 0,86 s.','Más daño y alcance; recarga de 0,72 s.','Más daño y alcance; conserva la recarga de 0,72 s y la escarcha.']),
+ magmaTower:tiers('magmaTower','Dispara ráfagas de seis bolas de fuego con daño de área: 10 de daño por proyectil y alcance de búsqueda 360.',['12 de daño por bola de fuego.','14 de daño por bola de fuego.','16 de daño por bola de fuego.']),
+ pulseTower:tiers('pulseTower','Emite pulsos de 34 de daño en radio 97 cada 1,35 s. Cada baja propia restaura el 15% de su vida máxima, sin superar el máximo.',['Más daño, radio 115 y recarga de 1,22 s; empieza a empujar enemigos livianos.','Radio 133, recarga de 1,12 s y más empuje.','Radio 151, recarga de 1,05 s, más empuje y daño adicional alrededor del pulso.']),
+ onionTower94:tiers('onionTower94','Francotirador frágil: 140 de vida base y alcance 620. Dispara cebollas de 12 de daño cada 0,5 s.',['Más vida y primeros detalles dorados; conserva el disparo base.','15 de daño por cebolla y un disparo cada 0,35 s.','Los impactos explotan en radio 65; 25% de aturdir 1 s a cada enemigo alcanzado. Los jefes son inmunes al aturdimiento.']),
+ catHouse85:tiers('catHouse85','Invoca un gato cada 5 s, hasta tres por casa. Gatos de 62 de vida y 9 de daño; dormir regenera 3 vida/s. Máximo tres casas.',['Los gatos pasan a 80 de vida máxima.','Los gatos se mueven más rápido: velocidad de 72 a 90.','Permite hasta cuatro gatos vivos por casa.'])
+ };
+ const production={sawmill:'6 de madera',crops:'5 de trigo',mine:'3 de hierro o 7 de piedra al azar',ironFactory:'4 de hierro',market:'6 monedas',diamondFactory:'1 diamante'};
+ for(const [id,amount]of Object.entries(production))descriptions[id]='Produce '+amount+' cada '+number96(producerTime(id))+' s mientras juegas.\n'+unique;
+ return descriptions;
+}
+function balance96(){balance95();const local=rules96();if(descMode96===local)return;descMode96=local;buildingDefs.onionTower94.hp=local?140:340;const descriptions=local?structureDescriptions96():{...descBase96,pulseTower:buildingDefs.pulseTower.desc,windPurifier:buildingDefs.windPurifier.desc,catHouse85:buildingDefs.catHouse85.desc};for(const [id,desc]of Object.entries(descriptions))buildingDefs[id].desc=desc;}
+function migrateOnion96(){if(!rules96())return;for(const b of game.buildings)if(b.type==='onionTower94'&&!b.health96){const ratio=clamp(b.hp/b.maxHp,0,1);b.maxHp=Math.max(1,Math.round(b.maxHp*140/340));b.hp=b.hp>0?Math.max(1,Math.round(b.maxHp*ratio)):0;b.health96=true;}}
+const reset96=resetRun;resetRun=function(...a){balance96();return reset96(...a);};
+const place96=placeBuildAt;placeBuildAt=function(...a){balance96();const old=new Set(game.buildings),r=place96(...a);for(const b of game.buildings)if(!old.has(b)&&b.type==='onionTower94')b.health96=true;return r;};
+const load96=continueWorld38;continueWorld38=function(...a){balance96();const r=load96(...a);if(r)migrateOnion96();return r;};document.getElementById('continueWorld38').onclick=continueWorld38;
+const buildings96=updateBuildings;updateBuildings=function(dt){balance96();migrateOnion96();return buildings96(dt);};
+const panel96=panelHtml;panelHtml=function(name){balance96();let h=panel96(name);if(rules96()&&name==='build'){for(const d of Object.values(buildingDefs))h=h.replace('<p>'+d.desc+'</p>','<p class="structure-desc96">'+d.desc+'</p>');h=h.replace('Mejora su vida, defensa y apoyo en cualquier mundo.','Protege la isla y desarrolla su defensa al mejorarlo.<br>Nivel 1: más vida y disparos de 10 de daño.<br>Nivel 2: más vida y disparos de 13 de daño.<br>Nivel 3: más vida, alcance 390, daño 16 y aura de apoyo.<br>Nivel 4: más vida, disparos de 18 de daño y modo furia.');}return h;};
+const update96=update;update=function(dt){balance96();return update96(dt);};
+const css96=document.createElement('style');css96.textContent='#panelHost .structure-desc96{white-space:pre-line;line-height:1.55;font-size:13px;margin:10px 0}';document.head.appendChild(css96);balance96();
 
 refreshContinue38();refreshChaos47();
 window.UmbraliaMenu84?.init();
