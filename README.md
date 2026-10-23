@@ -4,7 +4,7 @@
 
 Umbralia mezcla acción, supervivencia y defensa de torres en una aventura para navegador, con siete mundos, armas absurdas, acertijos, jefes y una isla que puedes convertir en tu fortaleza. Juega desde computadora o celular, sin instalar nada.
 
-**[Jugar en la página oficial](https://neliux.github.io/Umbralia/)** · Versión **v94** · [Historial de actualizaciones](CHANGELOG.md)
+**[Jugar en la página oficial](https://neliux.github.io/Umbralia/)** · Versión **v95** · [Historial de actualizaciones](CHANGELOG.md)
 
 ## Elige tu aventura
 
@@ -42,6 +42,16 @@ Combina murallas de piedra, hierro o diamante con puertas que se abren a tu paso
 | Intercambios | Tienda trampa y opciones de intercambio según los desbloqueos. |
 
 Los planos de ciertas estructuras se descubren al avanzar. Puedes vender construcciones, reconstruir robots averiados y preparar zonas de reparación. Los minerales mutantes infligen daño al recolectarlos y pueden liberar un Coloso mutante.
+
+### Novedades de v95
+
+- **Asedio de jefes:** sus ataques contra estructuras usan multiplicadores de ×3 en Fácil, ×4 en Normal, ×5 en Hardcore y ×6 en Masoquista. Se conserva el balance de los jefes del primer mundo de campaña.
+- **Pelota Roja:** añade meteoritos anunciados durante 1,3 s que dañan exclusivamente estructuras, priorizando Torre médica y Jardín purificador. Sus esbirros persiguen al jugador cuando no hay núcleo. Las invocaciones aumentan con la dificultad: asaltantes/guerreros en Fácil, guerreros/gigantes en Normal, ángeles/gólems en Hardcore y dragones/fénix en Masoquista.
+- **Obelisco de pulso:** cada baja propia restaura el 15% de su vida máxima, sin superar el máximo.
+- **Jardín purificador:** su curación al jugador baja de 5 a 2 por ciclo; mantiene la reparación de estructuras de v94.
+- **Balance:** Auto de guerra con 36 de daño de choque y tres proyectiles de 21; gatos con 62 de vida, 80 tras su primera mejora y 9 de daño. Los minerales mutantes infligen 22 de daño base al recogerlos, antes de las reducciones del jugador.
+- **Reparación en Hardcore:** permite reparar murallas y torretas, además de los demás edificios. Las reparaciones pagadas, incluido el trabajo del robot, cuestan **700% más: ×8**. No modifica el precio de construcción ni la curación pasiva de los jardines.
+- **Lanza Cebollas:** nuevo diseño de francotirador, con cañón largo, mira y piezas doradas que crecen con las tres estrellas. Sus estadísticas de ataque se conservan.
 
 ### Novedades de v94
 
