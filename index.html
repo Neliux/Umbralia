@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Umbralia v96</title>
+  <title>Umbralia v97</title>
   <style>
     :root {
       --bg: #0d3242;
@@ -2809,7 +2809,7 @@ const enemyDefs = {
         if (def.kind === "pulseTurret" && b.cd <= 0) {
           const lvl = b.xpLevel || 0;
           const pulseRange = (def.pulseRange || 92) + lvl * 18;
-          const target = nearestEnemy(b.x,b.y,120 + lvl * 10);
+          const target = nearestEnemy(b.x,b.y,rules97()?Math.max(120+lvl*10,pulseRange+20):120+lvl*10);
           if (target) {
             if(rules94())resonance94(b,pulseRange);else addEffect("circle", {x:b.x,y:b.y,range:pulseRange,life:.18,max:.18});
             for (const e of game.enemies) {
@@ -11968,6 +11968,24 @@ const buildings96=updateBuildings;updateBuildings=function(dt){balance96();migra
 const panel96=panelHtml;panelHtml=function(name){balance96();let h=panel96(name);if(rules96()&&name==='build'){for(const d of Object.values(buildingDefs))h=h.replace('<p>'+d.desc+'</p>','<p class="structure-desc96">'+d.desc+'</p>');h=h.replace('Mejora su vida, defensa y apoyo en cualquier mundo.','Protege la isla y desarrolla su defensa al mejorarlo.<br>Nivel 1: más vida y disparos de 10 de daño.<br>Nivel 2: más vida y disparos de 13 de daño.<br>Nivel 3: más vida, alcance 390, daño 16 y aura de apoyo.<br>Nivel 4: más vida, disparos de 18 de daño y modo furia.');}return h;};
 const update96=update;update=function(dt){balance96();return update96(dt);};
 const css96=document.createElement('style');css96.textContent='#panelHost .structure-desc96{white-space:pre-line;line-height:1.55;font-size:13px;margin:10px 0}';document.head.appendChild(css96);balance96();
+
+// v97 · Wider resonance, a measured Hardcore increase and the real job application.
+function rules97(){return !clock87.active||clock87.meta?.rules97===true;}
+const pulseRangeBase97=buildingDefs.pulseTower.pulseRange;let pulseMode97=null;
+function balance97(){balance96();const local=rules97();if(pulseMode97===local)return;pulseMode97=local;buildingDefs.pulseTower.pulseRange=local?110:pulseRangeBase97;if(local)buildingDefs.pulseTower.desc=buildingDefs.pulseTower.desc.replace('radio 97','radio 110').replace('radio 115','radio 128').replace('Radio 133','Radio 146').replace('Radio 151','Radio 164');}
+function hardenEnemy97(e){if(!rules97()||!isHardcoreMode()||!e||e.hp<=0||e.hardcore97||e.cage73)return;const ratio=clamp(e.hp/e.maxHp,0,1);e.maxHp=Math.max(1,Math.round(e.maxHp*1.08));e.hp=Math.max(1,Math.round(e.maxHp*ratio));e.hardcore97=true;}
+const spawn97=spawnEnemy;spawnEnemy=function(...a){const old=new Set(game.enemies),r=spawn97(...a);for(const e of game.enemies)if(!old.has(e))hardenEnemy97(e);return r;};
+// Chaos boss initialization replaces the health assigned by spawnEnemy; scale its final value once.
+const chaosSpawn97=chaosSpawn47;chaosSpawn47=function(type,boss=false){const old=new Set(game.enemies),r=chaosSpawn97(type,boss);if(boss&&rules97()&&isHardcoreMode())for(const e of game.enemies)if(!old.has(e)&&e.type===type){delete e.hardcore97;hardenEnemy97(e);}return r;};
+const voidSpawn97=spawnVoidBoss;spawnVoidBoss=function(...a){const r=voidSpawn97(...a);if(rules97()&&isHardcoreMode())for(const e of game.enemies)if(e.epic37){delete e.hardcore97;hardenEnemy97(e);}return r;};
+const hurt97=damagePlayer;damagePlayer=function(n,...a){return hurt97(rules97()&&isHardcoreMode()&&!collectingMutant93?n*1.08:n,...a);};
+const load97=continueWorld38;continueWorld38=function(...a){balance97();const r=load97(...a);if(r)for(const e of game.enemies)hardenEnemy97(e);return r;};document.getElementById('continueWorld38').onclick=continueWorld38;
+const hud97=updateHud;updateHud=function(...a){const r=hud97(...a);deathPill?.classList.toggle('hardcore-deaths97',game.started&&game.screen==='game'&&!game.chaos47&&!game.lost74&&isHardcoreMode());return r;};
+const css97=document.createElement('style');css97.textContent='#deathPill.hardcore-deaths97{color:#ff3047!important;background:#410b15!important;border:2px solid #ef243f!important;font-weight:900;text-shadow:0 0 6px #eb163a55}';document.head.appendChild(css97);
+let jobImage97=new Image();jobImage97.decoding='async';jobImage97.src='assets/enemies/job-application.webp';
+const jobFallback97=drawJob61;drawJob61=function(x,y,mini=false,age=0){if(!jobImage97.complete||!(jobImage97.width>0))return jobFallback97(x,y,mini,age);ctx.save();ctx.translate(x,y);if(mini)ctx.scale(.34,.34);else if(!game.settings.simpleGraphics57)ctx.rotate(Math.sin(age*2)*.045);ctx.fillStyle='#10232c55';ctx.fillRect(-41,-53,90,120);ctx.drawImage(jobImage97,-45,-60,90,120);ctx.restore();};
+const panel97=panelHtml;panelHtml=function(name){balance97();let h=panel97(name);if(rules97()&&name==='difficulty49')h=h.replace('Campaña con tres vidas, enemigos más exigentes y oleadas que escalan más deprisa.','Campaña con tres vidas: enemigos con 8% más vida y daño recibido aumentado un 8%. Las oleadas escalan más deprisa.');return h;};
+const update97=update;update=function(dt){balance97();for(const e of game.enemies)hardenEnemy97(e);return update97(dt);};balance97();
 
 refreshContinue38();refreshChaos47();
 window.UmbraliaMenu84?.init();

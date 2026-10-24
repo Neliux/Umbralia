@@ -4,7 +4,7 @@
 
 Umbralia mezcla acción, supervivencia y defensa de torres en una aventura para navegador, con siete mundos, armas absurdas, acertijos, jefes y una isla que puedes convertir en tu fortaleza. Juega desde computadora o celular, sin instalar nada.
 
-**[Jugar en la página oficial](https://neliux.github.io/Umbralia/)** · Versión **v96** · [Historial de actualizaciones](CHANGELOG.md)
+**[Jugar en la página oficial](https://neliux.github.io/Umbralia/)** · Versión **v97** · [Historial de actualizaciones](CHANGELOG.md)
 
 ## Elige tu aventura
 
@@ -42,6 +42,13 @@ Combina murallas de piedra, hierro o diamante con puertas que se abren a tu paso
 | Intercambios | Tienda trampa y opciones de intercambio según los desbloqueos. |
 
 Los planos de ciertas estructuras se descubren al avanzar. Puedes vender construcciones, reconstruir robots averiados y preparar zonas de reparación. Los minerales mutantes infligen daño al recolectarlos y pueden liberar un Coloso mutante.
+
+### Novedades de v97
+
+- **Obelisco de pulso:** radio base de 97 a 110; sus estrellas amplían el radio a 128, 146 y 164.
+- **Hardcore:** +8% de vida de enemigos y +8% de daño recibido respecto de v96. Se mantienen las tres vidas de campaña y los costes de reparación. Las heridas de enemigos guardados se conservan proporcionalmente.
+- **Contador de muertes:** rojo intenso en campaña Hardcore.
+- **Solicitud de empleo:** utiliza la imagen de formulario proporcionada, conservando ataques, invocaciones y animación de derrota. Compatible con gráficos simples.
 
 ### Novedades de v96
 
