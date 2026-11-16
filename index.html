@@ -480,7 +480,7 @@
   <script src="./config.js"></script>
   <script src="./assets/ranked/ranked.js?v=89"></script>
   <script src="./assets/ranked/accounts.js?v=92"></script>
-  <script src="./assets/ranked/menu.js?v=101"></script>
+  <script src="./assets/ranked/menu.js?v=103"></script>
 <script>
   (() => {
 // Scoped to the game IIFE. Auth and network clients keep the real browser clock.
@@ -11351,7 +11351,7 @@ const panels82=panelHtml;panelHtml=function(name){let h=panels82(name);if(name==
 const css82=document.createElement('style');css82.textContent=`.mode-status82{display:block;width:max-content;padding:5px 13px;border-radius:99px;font-size:12px;font-weight:850;margin:0 0 10px;border:1px solid}.recommended82{background:#d5eed5;color:#204b35;border-color:#85b295}.beta82{background:#f7dfb4;color:#63451e;border-color:#c6a16a}.expand-card82{flex:1 0 100%;display:grid;gap:8px;padding:14px;border:2px solid #d1aa44;border-radius:14px;background:linear-gradient(120deg,#eaf0ce,#f8df9c);color:#263e32;margin-bottom:10px}.expand-card82 button{min-height:54px;font-size:16px;font-weight:850;letter-spacing:.02em;background:#315e42!important;color:#fff7d8!important;border:2px solid #75954e!important;box-shadow:0 4px 0 #244b33}.expand-card82 button:disabled{background:#687965!important;color:#e5e9d9!important;box-shadow:none;opacity:.8}.expand-card82 small{font-size:12px;line-height:1.5}.expand-card82 button:focus-visible{outline:3px solid #263f6d;outline-offset:3px}@media(max-width:500px){.expand-card82 button{font-size:14px}.expand-card82{padding:10px}}`;document.head.appendChild(css82);
 
 // v87 · Accounts, swipeable menu and an explicitly unverified practice clock.
-const rankingButton84=document.createElement('button');rankingButton84.id='rankedMenu83';rankingButton84.className='btn';rankingButton84.textContent='Pruebas · BETA →';rankingButton84.onclick=()=>window.UmbraliaMenu84?.go(2);document.querySelector('.menu-utils47')?.appendChild(rankingButton84);
+const rankingButton84=document.createElement('button');rankingButton84.id='rankedMenu83';rankingButton84.className='btn';rankingButton84.textContent='Rankeds · BETA →';rankingButton84.onclick=()=>window.UmbraliaMenu84?.go(2);document.querySelector('.menu-utils47')?.appendChild(rankingButton84);
 let pendingRanked84=false;
 function practiceClock84(){const r=game.rankedBeta84;return r&&r.version===1&&Number.isFinite(r.elapsedMs)&&r.elapsedMs>=0?r:null;}
 function startPractice84(enabled){game.rankedBeta84=enabled?{version:1,elapsedMs:0,verified:false,finished:false}:null;if(enabled)showToast('Ranked BETA · Cronómetro de prueba. No publica récords.',4000);saveWorld38();}
