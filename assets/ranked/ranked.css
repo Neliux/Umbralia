@@ -8,3 +8,5 @@
 
 .menu-track84,.menu-page84{touch-action:pan-y}
 .menu-page84 .menu-card{overflow:visible!important;touch-action:pan-y}
+
+.coop-beta101{margin:0 0 32px;padding:clamp(20px,4vw,32px);border:2px solid #dfa955;border-radius:18px;background:linear-gradient(135deg,#28524d,#244252);color:#eff5dc;box-shadow:0 7px 18px #19332e33}.coop-beta101 h2{color:#fff0c4;margin:8px 0}.coop-tag101{display:inline-block;border-radius:99px;padding:5px 12px;background:#f4d38e;color:#563e20;font-size:11px;font-weight:900}.coop-warning101{padding:12px;border-radius:10px;background:#122e3acc;font-size:13px;line-height:1.55}.coop-button101{display:inline-block;padding:13px 20px;border-radius:11px;background:#d6e9b4;color:#203e35;font-weight:900;text-decoration:none}.coop-button101:focus-visible{outline:3px solid #fff;outline-offset:3px}

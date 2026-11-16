@@ -412,7 +412,6 @@
         <section class="mode-card47 campaign-card47"><span class="mode-status82 recommended82">Recomendable</span><span class="mode-tag47">EXPLORACIÓN · CONSTRUCCIÓN</span><h2>La campaña</h2><p>Tu isla, sus guardianes y los secretos del tiempo.</p><div class="mode-actions47"><button class="btn primary" id="continueWorld38" disabled>Continuar mundo</button><button class="btn" id="playBtn">Nueva aventura</button></div><p id="saveInfo38" class="panel-note">Guardado local en este navegador y dispositivo.</p></section>
         <section class="mode-card47 chaos-card47"><span class="mode-status82 beta82">Beta</span><span class="mode-tag47">NORMAL O INFINITO · UNA VIDA</span><h2>Modo Caos <span>✦</span></h2><p>Cualquier arma. Un jefe cada tres oleadas. Poderes que se acumulan.</p><div class="mode-actions47"><button class="btn chaos-primary47" id="chaosMenu47">Entrar al caos</button><button class="btn" id="chaosContinue47" disabled>Continuar Caos normal</button></div><p id="chaosSave47" class="panel-note">Un desafío aparte, con guardado independiente.</p></section>
       </div>
-      <p><a class="btn" href="multiplayer/">🤝 Multijugador · Primera prueba</a></p>
       <div class="menu-utils47"><button class="btn" id="menuSettingsBtn">⚙ Ajustes</button><button class="btn" id="menuHelp47">Cómo jugar</button><button class="btn" id="creditsBtn">Créditos</button></div>
       <hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
       <details class="menu-options47"><summary>Tu personaje <span>Personalizar ↓</span></summary><h2 style="margin:16px 0 8px;font-size:20px">Personaje</h2>
@@ -477,11 +476,11 @@
 
   <div id="toast" class="toast hidden"></div>
 
-  <link rel="stylesheet" href="./assets/ranked/ranked.css?v=89">
+  <link rel="stylesheet" href="./assets/ranked/ranked.css?v=101">
   <script src="./config.js"></script>
   <script src="./assets/ranked/ranked.js?v=89"></script>
   <script src="./assets/ranked/accounts.js?v=92"></script>
-  <script src="./assets/ranked/menu.js?v=89"></script>
+  <script src="./assets/ranked/menu.js?v=101"></script>
 <script>
   (() => {
 // Scoped to the game IIFE. Auth and network clients keep the real browser clock.
@@ -11352,7 +11351,7 @@ const panels82=panelHtml;panelHtml=function(name){let h=panels82(name);if(name==
 const css82=document.createElement('style');css82.textContent=`.mode-status82{display:block;width:max-content;padding:5px 13px;border-radius:99px;font-size:12px;font-weight:850;margin:0 0 10px;border:1px solid}.recommended82{background:#d5eed5;color:#204b35;border-color:#85b295}.beta82{background:#f7dfb4;color:#63451e;border-color:#c6a16a}.expand-card82{flex:1 0 100%;display:grid;gap:8px;padding:14px;border:2px solid #d1aa44;border-radius:14px;background:linear-gradient(120deg,#eaf0ce,#f8df9c);color:#263e32;margin-bottom:10px}.expand-card82 button{min-height:54px;font-size:16px;font-weight:850;letter-spacing:.02em;background:#315e42!important;color:#fff7d8!important;border:2px solid #75954e!important;box-shadow:0 4px 0 #244b33}.expand-card82 button:disabled{background:#687965!important;color:#e5e9d9!important;box-shadow:none;opacity:.8}.expand-card82 small{font-size:12px;line-height:1.5}.expand-card82 button:focus-visible{outline:3px solid #263f6d;outline-offset:3px}@media(max-width:500px){.expand-card82 button{font-size:14px}.expand-card82{padding:10px}}`;document.head.appendChild(css82);
 
 // v87 · Accounts, swipeable menu and an explicitly unverified practice clock.
-const rankingButton84=document.createElement('button');rankingButton84.id='rankedMenu83';rankingButton84.className='btn';rankingButton84.textContent='Rankeds · BETA →';rankingButton84.onclick=()=>window.UmbraliaMenu84?.go(2);document.querySelector('.menu-utils47')?.appendChild(rankingButton84);
+const rankingButton84=document.createElement('button');rankingButton84.id='rankedMenu83';rankingButton84.className='btn';rankingButton84.textContent='Pruebas · BETA →';rankingButton84.onclick=()=>window.UmbraliaMenu84?.go(2);document.querySelector('.menu-utils47')?.appendChild(rankingButton84);
 let pendingRanked84=false;
 function practiceClock84(){const r=game.rankedBeta84;return r&&r.version===1&&Number.isFinite(r.elapsedMs)&&r.elapsedMs>=0?r:null;}
 function startPractice84(enabled){game.rankedBeta84=enabled?{version:1,elapsedMs:0,verified:false,finished:false}:null;if(enabled)showToast('Ranked BETA · Cronómetro de prueba. No publica récords.',4000);saveWorld38();}
@@ -12047,6 +12046,12 @@ const hud99=updateHud;updateHud=function(){hud99();if(weatherActive99()&&weather
 // Recupera la última posición finita si algún cálculo de movimiento produce NaN.
 const coreGuard100=clearEnemyCore78;
 clearEnemyCore78=function(e,previous=null){if(rules98()&&e&&(!Number.isFinite(e.x)||!Number.isFinite(e.y))){const p=previous&&Number.isFinite(previous.x)&&Number.isFinite(previous.y)?previous:e.lastFinite100;if(p){e.x=p.x;e.y=p.y;}else{const a=angleTo(game.core.x||0,game.core.y||0,game.player.x,game.player.y)+Math.PI,r=(game.core.r||36)+(e.r||16)+8;e.x=(game.core.x||0)+Math.cos(a)*r;e.y=(game.core.y||0)+Math.sin(a)*r;}}const result=coreGuard100(e,previous);if(rules98()&&e&&Number.isFinite(e.x)&&Number.isFinite(e.y))e.lastFinite100={x:e.x,y:e.y};return result;};
+
+// Vitrina independiente, accesible desde el final del inicio.
+const trophyButton101=document.createElement('button');trophyButton101.type='button';trophyButton101.id='openTrophies101';trophyButton101.className='btn trophy-open101';trophyButton101.textContent='🏆 Logros';document.querySelector('.menu-card37').appendChild(trophyButton101);
+const trophyDialog101=document.createElement('div');trophyDialog101.id='trophyDialog101';trophyDialog101.className='trophy-dialog101 hidden';trophyDialog101.setAttribute('role','dialog');trophyDialog101.setAttribute('aria-modal','true');trophyDialog101.setAttribute('aria-label','Vitrina de logros');const trophyCard101=document.createElement('div');trophyCard101.className='trophy-card101';const trophyClose101=document.createElement('button');trophyClose101.type='button';trophyClose101.className='btn trophy-close101';trophyClose101.textContent='← Volver al inicio';trophyCard101.appendChild(trophyClose101);trophyCard101.appendChild(trophyShelf50);trophyDialog101.appendChild(trophyCard101);document.body.appendChild(trophyDialog101);
+function closeTrophies101(){trophyDialog101.classList.add('hidden');trophyButton101.focus();}trophyButton101.onclick=()=>{renderTrophies50();trophyDialog101.classList.remove('hidden');trophyCard101.scrollTop=0;trophyClose101.focus();};trophyClose101.onclick=closeTrophies101;trophyDialog101.onclick=e=>{if(e.target===trophyDialog101)closeTrophies101();};window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!trophyDialog101.classList.contains('hidden')){e.preventDefault();closeTrophies101();}});
+const css101=document.createElement('style');css101.textContent=`.trophy-open101{display:block;width:100%;margin:22px 0 0!important;min-height:54px;font-size:16px}.trophy-dialog101{position:fixed;inset:0;z-index:9999;display:flex;justify-content:center;align-items:center;padding:max(12px,env(safe-area-inset-top)) 12px max(12px,env(safe-area-inset-bottom));background:#09242de8}.trophy-dialog101.hidden{display:none!important}.trophy-card101{width:min(960px,100%);max-height:100%;overflow:auto;padding:clamp(16px,4vw,30px);border:1px solid #99b9a1;border-radius:20px;background:#193941;box-sizing:border-box}.trophy-close101{min-height:44px}.trophy-card101 #trophies50{margin-top:16px}.lost-arsenal74+[data-lost-exit74]{display:block;position:static;margin:24px 0 6px;min-height:44px}@media(max-width:500px){.trophy-card101{padding:16px}.trophy-dialog101{align-items:stretch}}`;document.head.appendChild(css101);
 
 refreshContinue38();refreshChaos47();
 window.UmbraliaMenu84?.init();
